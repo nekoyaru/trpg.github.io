@@ -1,0 +1,4919 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>快樂又痛苦的跑團 - 愛噛愛咬</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
+            font-weight: 300;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
+            font-weight: 500;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
+            font-weight: 600;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
+            font-weight: 700;
+        }
+
+        body {
+            background-color: #36393e;
+            color: #dcddde;
+            font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+        a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        img {
+            object-fit: contain;
+        }
+
+        .markdown {
+            max-width: 100%;
+            line-height: 1.3;
+            overflow-wrap: break-word;
+        }
+
+        .preserve-whitespace {
+            white-space: pre-wrap;
+        }
+
+        .spoiler-text {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .spoiler-text--hidden {
+            cursor: pointer;
+            background-color: #202225;
+            color: rgba(0, 0, 0, 0);
+        }
+
+        .spoiler-text--hidden:hover {
+            background-color: rgba(32, 34, 37, 0.8);
+        }
+
+        .spoiler-text--hidden::selection {
+            color: rgba(0, 0, 0, 0);
+        }
+
+        .quote {
+            display: flex;
+            margin: 0.05em 0;
+        }
+
+        .quote-border {
+            margin-right: 0.5em;
+            border: 2px solid #4f545c;
+            border-radius: 3px;
+        }
+
+        .pre {
+            background-color: #2f3136;
+            font-family: "Consolas", "Courier New", Courier, monospace;
+        }
+
+        .pre--multiline {
+            margin-top: 0.25em;
+            padding: 0.5em;
+            border: 2px solid #282b30;
+            border-radius: 5px;
+            color: #b9bbbe;
+        }
+
+        .pre--multiline.hljs {
+            background-color: #2f3136;
+            color: #b9bbbe;
+        }
+
+        .pre--inline {
+            padding: 2px;
+            border-radius: 3px;
+            font-size: 0.85em;
+        }
+
+        .mention {
+            border-radius: 3px;
+            padding: 0 2px;
+            color: #dee0fc;
+            background-color: rgba(88, 101, 242, .3);
+            font-weight: 500;
+        }
+
+        .mention:hover {
+            background-color: #5865f2;
+            color: #ffffff
+        }
+
+        .timestamp {
+            border-radius: 3px;
+            padding: 0 2px;
+            background-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .emoji {
+            width: 1.325em;
+            height: 1.325em;
+            margin: 0 0.06em;
+            vertical-align: -0.4em;
+        }
+
+        .emoji--small {
+            width: 1em;
+            height: 1em;
+        }
+
+        .emoji--large {
+            width: 2.8em;
+            height: 2.8em;
+        }
+
+        .preamble {
+            display: grid;
+            margin: 0 0.3em 0.6em 0.3em;
+            max-width: 100%;
+            grid-template-columns: auto 1fr;
+        }
+
+        .preamble__guild-icon-container {
+            grid-column: 1;
+        }
+
+        .preamble__guild-icon {
+            max-width: 88px;
+            max-height: 88px;
+        }
+
+        .preamble__entries-container {
+            grid-column: 2;
+            margin-left: 0.6em;
+        }
+
+        .preamble__entry {
+            font-size: 1.4em;
+            color: #ffffff;
+        }
+
+        .preamble__entry--small {
+            font-size: 1em;
+        }
+
+        .chatlog {
+            max-width: 100%;
+        }
+
+        .chatlog__message-group {
+            display: grid;
+            margin: 0 0.6em;
+            padding: 0.9em 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            grid-template-columns: auto 1fr;
+        }
+
+        .chatlog__reference-symbol {
+            grid-column: 1;
+            margin: 8px 4px 4px 18px;
+            border-left: 2px solid #4f545c;
+            border-top: 2px solid #4f545c;
+            border-radius: 8px 0 0 0;
+        }
+
+        .chatlog__reference {
+            display: flex;
+            grid-column: 2;
+            margin-bottom: 0.25em;
+            font-size: 0.875em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            align-items: center;
+            color: #b5b6b8;
+        }
+
+        .chatlog__reference-avatar {
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            margin-right: 0.25em;
+        }
+
+        .chatlog__reference-name {
+            margin-right: 0.3em;
+            font-weight: 600;
+        }
+
+        .chatlog__reference-content {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chatlog__reference-content a:hover {
+            text-decoration: none;
+        }
+
+        .chatlog__reference-link {
+            cursor: pointer;
+            color: #b5b6b8;
+        }
+
+        .chatlog__reference-link * {
+            display: inline;
+            pointer-events: none;
+        }
+
+        .chatlog__reference-link:hover {
+            color: #ffffff;
+        }
+
+        .chatlog__reference-link:hover *:not(.spoiler-text) {
+            color: #ffffff;
+        }
+
+        .chatlog__reference-edited-timestamp {
+            margin-left: 0.25em;
+            font-size: 0.8em;
+            unicode-bidi: bidi-override;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__author-avatar-container {
+            grid-column: 1;
+            width: 40px;
+            height: 40px;
+            margin-right: 16px;
+        }
+
+        .chatlog__author-avatar {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+
+        .chatlog__messages {
+            grid-column: 2;
+            min-width: 50%;
+            direction: ltr;
+        }
+
+        .chatlog__author-name {
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .chatlog__timestamp {
+            margin-left: 0.3em;
+            font-size: 0.75em;
+            direction: ltr;
+            unicode-bidi: bidi-override;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__message {
+            padding: 0.1em 0.3em;
+            margin: 0 -0.3em;
+            background-color: transparent;
+            transition: background-color 1s ease;
+        }
+
+        .chatlog__message--highlighted {
+            background-color: rgba(114, 137, 218, 0.2);
+        }
+
+        .chatlog__message--pinned {
+            background-color: rgba(249, 168, 37, 0.05);
+        }
+
+        .chatlog__content {
+            font-size: 0.95em;
+            word-wrap: break-word;
+        }
+
+        .chatlog__edited-timestamp {
+            margin-left: 0.15em;
+            font-size: 0.8em;
+        }
+
+        .chatlog__attachment {
+            display: inline-block;
+            position: relative;
+            margin-top: 0.3em;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .chatlog__attachment--hidden {
+            cursor: pointer;
+            box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .chatlog__attachment--hidden * {
+            pointer-events: none;
+        }
+
+        .chatlog__attachment-spoiler-caption {
+            display: none;
+            z-index: 999;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 0.4em 0.8em;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-radius: 20px;
+            color: #dcddde;
+            font-size: 0.9em;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-spoiler-caption {
+            display: block;
+        }
+
+        .chatlog__attachment--hidden:hover .chatlog__attachment-spoiler-caption {
+            color: #fff;
+        }
+
+        .chatlog__attachment-media {
+            vertical-align: top;
+            max-width: 45vw;
+            max-height: 500px;
+            border-radius: 3px;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-media {
+            filter: blur(44px);
+        }
+
+        .chatlog__attachment-generic {
+            width: 100%;
+            max-width: 520px;
+            height: 40px;
+            padding: 10px;
+            background-color: #2f3136;
+            border: 1px solid #292b2f;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-generic {
+            filter: blur(44px);
+        }
+
+        .chatlog__attachment-generic-icon {
+            float: left;
+            width: 30px;
+            height: 100%;
+            margin-right: 10px;
+        }
+
+        .chatlog__attachment-generic-size {
+            color: #72767d;
+            font-size: 12px;
+        }
+
+        .chatlog__attachment-generic-name {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .chatlog__edited-timestamp {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__embed {
+            display: flex;
+            margin-top: 0.3em;
+            max-width: 520px;
+        }
+
+        .chatlog__embed-color-pill {
+            flex-shrink: 0;
+            width: 0.25em;
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+
+        .chatlog__embed-color-pill--default {
+            background-color: #202225;
+        }
+
+        .chatlog__embed-content-container {
+            display: flex;
+            flex-direction: column;
+            padding: 0.5em 0.6em;
+            background-color: rgba(46, 48, 54, 0.3);
+            border: 1px solid rgba(46, 48, 54, 0.6);
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+
+        .chatlog__embed-content {
+            display: flex;
+            width: 100%;
+        }
+
+        .chatlog__embed-text {
+            flex: 1;
+        }
+
+        .chatlog__embed-author {
+            display: flex;
+            margin-bottom: 0.3em;
+            align-items: center;
+        }
+
+        .chatlog__embed-author-icon {
+            margin-right: 0.5em;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .chatlog__embed-author-name {
+            font-size: 0.875em;
+            font-weight: 600;
+            direction: ltr;
+            unicode-bidi: bidi-override;
+            color: #ffffff
+        }
+
+        .chatlog__embed-author-name-link {
+            color: #ffffff;
+        }
+
+        .chatlog__embed-title {
+            margin-bottom: 0.2em;
+            font-size: 0.875em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .chatlog__embed-description {
+            font-weight: 500;
+            font-size: 0.85em;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 0.5em;
+        }
+
+        .chatlog__embed-field {
+            flex: 0;
+            min-width: 100%;
+            max-width: 506px;
+            padding-top: 0.6em;
+            font-size: 0.875em;
+        }
+
+        .chatlog__embed-field--inline {
+            flex: 1;
+            flex-basis: auto;
+            min-width: 150px;
+        }
+
+        .chatlog__embed-field-name {
+            margin-bottom: 0.2em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .chatlog__embed-field-value {
+            font-weight: 500;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-thumbnail {
+            flex: 0;
+            margin-left: 1.2em;
+            max-width: 80px;
+            max-height: 80px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-image-container {
+            margin-top: 0.6em;
+        }
+
+        .chatlog__embed-image {
+            max-width: 500px;
+            max-height: 400px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-footer {
+            margin-top: 0.6em;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-footer-icon {
+            margin-right: 0.2em;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+
+        .chatlog__embed-footer-text {
+            vertical-align: middle;
+            font-size: 0.75em;
+            font-weight: 500;
+        }
+
+        .chatlog__embed-plainimage {
+            vertical-align: top;
+            max-width: 45vw;
+            max-height: 500px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-spotify {
+            border: 0;
+        }
+
+        .chatlog__embed-youtube-container {
+            margin-top: 0.6em;
+        }
+
+        .chatlog__embed-youtube {
+            border: 0;
+            border-radius: 3px;
+        }
+
+        .chatlog__sticker {
+            width: 180px;
+            height: 180px;
+        }
+
+        .chatlog__sticker--media {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .chatlog__reactions {
+            display: flex;
+        }
+
+        .chatlog__reaction {
+            display: flex;
+            align-items: center;
+            margin: 0.35em 0.1em 0.1em 0;
+            padding: .125rem .375rem;
+            background-color: #2f3136;
+            border-radius: 8px;
+            border-color: transparent;
+            border-width: 1px;
+            border-style: solid;
+        }
+
+        .chatlog__reaction:hover {
+            border-color: hsla(0,0%,100%,.2);
+            border-width: 1px;
+            border-style: solid;
+            background-color: transparent;
+        }
+
+        .chatlog__reaction-count {
+            min-width: 9px;
+            margin-left: 0.35em;
+            font-size: 0.875em;
+            color: #b9bbbe;
+        }
+
+        .chatlog__reaction:hover .chatlog__reaction-count {
+            color: #dcddde;
+        }
+
+        .chatlog__bot-tag {
+            position: relative;
+            top: -.1em;
+            margin-left: 0.3em;
+            padding: 0.05em 0.3em;
+            border-radius: 3px;
+            line-height: 1.3;
+            background-color: #5865F2;
+            color: #ffffff;
+            font-size: 0.625em;
+            font-weight: 500;
+        }
+
+        .postamble {
+            margin: 1.4em 0.3em 0.6em 0.3em;
+            padding: 1em;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .postamble__entry {
+            color: #ffffff;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(e => hljs.highlightBlock(e));
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.8.1/lottie.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.chatlog__sticker--media[data-source]').forEach(e => {
+                const imageDataUrl = e.getAttribute('data-source');
+
+                const anim = lottie.loadAnimation({
+                  container: e,
+                  renderer: 'svg',
+                  loop: true,
+                  autoplay: true,
+                  path: imageDataUrl
+                });
+
+                anim.addEventListener('data_failed', () =>
+                    e.innerHTML = '<strong>[Sticker cannot be rendered]</strong>'
+                );
+            });
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler-text--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler-text--hidden');
+            }
+            if (element && element.classList.contains('chatlog__attachment--hidden')) {
+                event.preventDefault();
+                element.classList.remove('chatlog__attachment--hidden');
+            }
+        }
+    </script>
+
+    <svg style="display: none">
+        <symbol id="icon-attachment" viewBox="0 0 720 960">
+            <path fill="#f4f5fb" d="M50,935a25,25,0,0,1-25-25V50A25,25,0,0,1,50,25H519.6L695,201.32V910a25,25,0,0,1-25,25Z" />
+            <path fill="#7789c4" d="M509.21,50,670,211.63V910H50V50H509.21M530,0H50A50,50,0,0,0,0,50V910a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50h0V191Z" />
+            <path fill="#f4f5fb" d="M530,215a25,25,0,0,1-25-25V50a25,25,0,0,1,16.23-23.41L693.41,198.77A25,25,0,0,1,670,215Z" />
+            <path fill="#7789c4" d="M530,70.71,649.29,190H530V70.71M530,0a50,50,0,0,0-50,50V190a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50Z" />
+        </symbol>
+    </svg>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="https://cdn.discordapp.com/icons/887309839531913287/2d4726796c65c5ed97eccbcaa56bfdd9.png" alt="Guild icon" loading="lazy">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">快樂又痛苦的跑團</div>
+        <div class="preamble__entry">同仁文聚集 / 愛噛愛咬</div>
+
+
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 12:29 AM</span>
+
+            <div class="chatlog__message " data-message-id="958402633985564683" id="message-958402633985564683" title="Message sent: 30-Mar-22 12:29 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">好香。
+
+一股甜美的味道將你從夢境裡喚醒，在睜眼的瞬間便能發現四周是某個陌生的房間。
+
+雙眼很快便能適應這股自頂上傳來的柔和燈光，甚至能說是有些昏暗。
+
+在反應過來之前，房間裡傳來另一個聲音。
+你知道、你熟悉這個嗓音的主人——</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 12:30 AM</span>
+
+            <div class="chatlog__message " data-message-id="958402683105079347" id="message-958402683105079347" title="Message sent: 30-Mar-22 12:30 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「早安，蓮。」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 12:30 AM</span>
+
+            <div class="chatlog__message " data-message-id="958402779175600218" id="message-958402779175600218" title="Message sent: 30-Mar-22 12:30 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">是明智。
+
+扭頭一看，他就在你的身旁。
+
+你們正身於床上，你會抱著什麼樣的情緒而轉過頭去看他呢？
+
+明智吾郎的上半身穿著已經解開兩、三顆扣子的襯衫，是你看慣的那套衣服，但外套與領帶並未穿著繫上。
+
+確認你醒來的他微笑著擅自繼續開口。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 12:30 AM</span>
+
+            <div class="chatlog__message " data-message-id="958402848054464592" id="message-958402848054464592" title="Message sent: 30-Mar-22 12:30 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「今天的治療還要繼續哦。」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 12:31 AM</span>
+
+            <div class="chatlog__message " data-message-id="958403071011086396" id="message-958403071011086396" title="Message sent: 30-Mar-22 12:31 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">同時，在他暴露的肩膀上可以看到深深的咬痕，似乎在那些傷口上已經被重複噬咬了不下數次，以至於齒印上能見到瘀傷遍布四處。
+
+而，當你看到傷疤齒痕的那一刻，有什麼自然地從腦海中悄悄低語著。
+
+那是非常吸引人、充滿誘人的嗓音。
+
+——啊，想咬下去，想把全部都吞入口中咀嚼。
+
+<div class="quote"><div class="quote-border"></div><div class="quote-content">突然又莫名的情況，sc 0/1。
+同時，進行POW檢定。</div></div></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/735505070195736587/12c95f0ef5e5d154063da4892e230e90.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="夜玥#9054" data-user-id="735505070195736587" style="color: rgb(147,0,0)">夜玥</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 12:32 AM</span>
+
+            <div class="chatlog__message " data-message-id="958403310069633044" id="message-958403310069633044" title="Message sent: 30-Mar-22 12:32 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">.sc 75 0/1</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 12:32 AM</span>
+
+            <div class="chatlog__message " data-message-id="958403311155945492" id="message-958403311155945492" title="Message sent: 30-Mar-22 12:32 AM">
+
+
+                        <div class="chatlog__embed">
+                                <div class="chatlog__embed-color-pill" style="background-color: rgba(0,153,255,255)"></div>
+
+                            <div class="chatlog__embed-content-container">
+                                <div class="chatlog__embed-content">
+                                    <div class="chatlog__embed-text">
+                                            <div class="chatlog__embed-author">
+                                                    <img class="chatlog__embed-author-icon" src="https://images-ext-1.discordapp.net/external/3Lx0rapR2hJBS4woEUa0_oDMavhu5ifHB9TpeWhte0c/https/user-images.githubusercontent.com/23254376/113255717-bd47a300-92fa-11eb-90f2-7ebd00cd372f.png" alt="Author icon" loading="lazy" onerror="this.style.visibility='hidden'">
+
+                                                    <span class="chatlog__embed-author-name">
+                                                            <a class="chatlog__embed-author-name-link" href="https://www.patreon.com/HKTRPG">HKTRPG</a>
+                                                    </span>
+                                            </div>
+
+
+                                            <div class="chatlog__embed-description">
+                                                <div class="markdown preserve-whitespace"><span class="mention" title="夜玥#9054">@夜玥</span> 
+San Check
+1d100 ≦ 75
+擲出:21 → 成功!
+失去0點San
+現在San值是75點</div>
+                                            </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/735505070195736587/12c95f0ef5e5d154063da4892e230e90.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="夜玥#9054" data-user-id="735505070195736587" style="color: rgb(147,0,0)">夜玥</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 12:33 AM</span>
+
+            <div class="chatlog__message " data-message-id="958403421331947630" id="message-958403421331947630" title="Message sent: 30-Mar-22 12:33 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">cc 75</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 12:33 AM</span>
+
+            <div class="chatlog__message " data-message-id="958403423601033336" id="message-958403423601033336" title="Message sent: 30-Mar-22 12:33 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="夜玥#9054">@夜玥</span> 
+1D100 ≦ 75：
+61 → 通常成功</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 12:35 AM</span>
+
+            <div class="chatlog__message " data-message-id="958403982894694430" id="message-958403982894694430" title="Message sent: 30-Mar-22 12:35 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">你將這股衝動壓了下去，在看見你沒有反應後，明智皺起了眉頭，並向你靠得更近了些。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 12:35 AM</span>
+
+            <div class="chatlog__message " data-message-id="958404080781361233" id="message-958404080781361233" title="Message sent: 30-Mar-22 12:35 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「啊——啊、又來了？這是治療，沒有要對你做什麼……」態度異常的有些強硬。
+
+「……不然會治不好的喔？」他又將襯衫往旁邊拉下，露出更多肩胛骨部分的皮膚。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 12:36 AM</span>
+
+            <div class="chatlog__message " data-message-id="958404306309099580" id="message-958404306309099580" title="Message sent: 30-Mar-22 12:36 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">意識從遙遠的彼端被誰用力的拽回，不同於來去夢與現實的狹縫之中，睜眼所見既不是熟悉的閣樓天井、亦沒有少女溫和的歡迎，沒有度數的眼鏡還掛在鼻梁上，透過鏡片只能看見微弱的光線。
+記憶之間出現斷層，年前被嚴刑拷打的同時帶來的頭疼此時就像復甦一般，一手支撐起身體另一手輕揉前額，五感比理智早一步捕捉到房內還有他人的存在，近乎是下意識地朝他的方向頭去目光，映入眼簾的畫面卻遠超乎自己預期。
+「明智……」
+
+你為什麼會在這裡，你活下來了嗎？那場險些帶走友人的爆炸自記憶深處翻湧而出，想說的東西、想問的問題還有太多，咬緊下唇以阻止將那些話語脫口而出，同時也徹底將對方的狀況全數收入眼底。
+──有哪裡不太對勁。
+緊握拳頭的動作讓指甲刺入掌心，在本能的作祟下有什麼慾望在心底悄然而生，但是不對。他們不是、也不該跨過那條最後的底線，那會讓人失望。
+沒有人追求那樣的結局、還有那樣的關係。
+
+尚未釐清思緒，方才誘人的味道又朝自己更近一些。視線無法從對方身上離開，只好在那人動作的同時伸手將他擁入懷中，「我不明白……你說的治療是怎麼回事？」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 12:38 AM</span>
+
+            <div class="chatlog__message " data-message-id="958404833923182632" id="message-958404833923182632" title="Message sent: 30-Mar-22 12:38 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">年紀稍人大一些的少年仍掛著在事發前偽裝自己的溫和笑顏，但在接著發生擁抱的舉動後，明智的臉色一瞬變得陰暗，像是嫌棄似的。
+但讓人意外的是，明智僅僅只有在被擁入懷中時有一瞬間的掙扎，隨後便安安分分，甚至有種感覺他會讓人抱到高興為止。
+
+這是對敵人該有的反應？也許明智這麼想著，傳達出的眼神便是如此，像是在看怪人一樣。
+
+「治療就是治療，不明白的話證明怪盜團的團長也就那樣。」
+
+給予的回答便是這一句話，可能是懶得解釋，也或許是覺得你此時並沒有想要咬他的意思。
+未戴著手套的手抬起－－並不是要回擁，而是扯著後領把人給拉開。
+
+「你睡的夠久了，身上都是汗……給我去清洗一下，浴室在那裡。」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 12:41 AM</span>
+
+            <div class="chatlog__message " data-message-id="958405640672403476" id="message-958405640672403476" title="Message sent: 30-Mar-22 12:41 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">現在所在的房間可以稱得上是最簡陋的、可供兩個人生存的空間，除了你方才躺過的床鋪以外還有一張<u>雙人餐桌</u>。
+
+在床邊掛著<u>窗簾</u>，角落擺放著<u>側桌</u>。
+
+可以看到通往廚房以及<u>浴室</u>的走廊。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 12:43 AM</span>
+
+            <div class="chatlog__message " data-message-id="958405963944189952" id="message-958405963944189952" title="Message sent: 30-Mar-22 12:43 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">從相識的那天起就總是如此。不可能沒有注意到對方明顯有了變化的臉色，卻只是在他試圖掙扎的時候收緊擁抱的力氣，本以為按這人的性子必須要來一場拉鋸賽，一下就沒了反應反倒讓自己愣了半會兒。這個人難以捉摸，從他向自己伸出手的那天起——又或者是更久以前開始，就是如此。
+聽著他的嘲諷並沒有出聲反駁的意思，他口中的「治療」難以從字面意思上去解析。和武見醫生的手段肯定不同，能得知的也就如此。
+
+「我睡了多久？」被人使力拉開後也沒有打算再去碰他，畢竟本就不是打著這種主義進行的動作。確定自己的渴望明顯下降後才直視著他發問，自然沒有遺漏他話中的命令語氣，只是眼下的一切都和記憶有所出入，尤其面對眼前這人更是無法掉以輕心。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 12:45 AM</span>
+
+            <div class="chatlog__message " data-message-id="958406453054545963" id="message-958406453054545963" title="Message sent: 30-Mar-22 12:45 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「如果你的睡了多久是指在清醒意識下投入睡眠並再度醒過來的時間，十分遺憾，我並不清楚。」
+
+兩具緊貼著的身軀分開，方才短暫接觸而產生的一點體溫伴隨著空氣消逝。明智從容的與人拉開一段距離、並著手開始整理因剛睡醒以及方才相擁而凌亂的衣物。
+
+白潔的白襯遮掩住了或紅或紫的咬痕，衣領處也隱約的露出幾道傷痕，眼前的少年看來對這些傷勢被發現絲毫不介意。纖細的手指扣上了兩顆的扣子，並將襯衫的皺褶撫平，即使是這樣的場合仍介意著衣冠的整潔。
+
+「安心吧。……什麼的，就算這麼說，畢竟對象是我，信任的數字降到零－－甚至已經成負數也不意外。」那雙眼瞳沒漏掉怪盜的眼神，嘴角勾起不明所以的笑。
+
+明智翻身下了床，自顧自的繼續說下去。
+
+「希望我回來的時候你已經洗好了，我可不能接受我得跟一個有汗臭的傢伙躺在同一張床上。」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 12:46 AM</span>
+
+            <div class="chatlog__message " data-message-id="958406777802719422" id="message-958406777802719422" title="Message sent: 30-Mar-22 12:46 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">抬眸同他對上視線，淒涼且悲哀的笑撞進眼中；摸不透這個人的想法，事到如今仍是看不清這種笑容背後的意義，只是他有時候會這麼笑，笑得令人難過。
+
+伸手抓住那人的手腕，並不是為了挽留他——就算挽留也毫無作用吧，他隨便就能掙脫束縛——而是打斷他的自說自話。
+「……獅童的事情已經解決了。」那晚答應你的承諾已經做到了，針鋒相對的理由也不復存在，「所以我相信你。」
+
+學著他說完自己的話後也鬆手起身，先是在這個房間內走一圈打量起這個環境，隨後在對方再次出聲前才慢慢的走向他所說的浴室的方向。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 12:47 AM</span>
+
+            <div class="chatlog__message " data-message-id="958407016789970964" id="message-958407016789970964" title="Message sent: 30-Mar-22 12:47 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">得知獅童的事件解決時，眼神中閃過龐大且複雜的情緒。
+
+是因為目標達成的痛快？
+是無法親自動手的扼腕？
+是無法親眼見證的悔恨？
+是得交由自己口中所稱的「偽善者」來達成一生宿願的不甘？
+
+抑或是由那一句「我相信你」而產生的微妙情感。
+
+「……那真是太棒了。」在走往浴室的同時，自你身後傳來了明智的聲音，他的笑聲是嘲諷又或是自嘲，也不知是否真的是為此而笑。
+
+在你進入浴室之後，他也未再說話。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 01:04 AM</span>
+
+            <div class="chatlog__message " data-message-id="958411442044928010" id="message-958411442044928010" title="Message sent: 30-Mar-22 01:04 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">你抱著複雜的心情來到浴室，能看見浴缸已經放好水，盥洗設備因熱水染上熱氣騰騰，鏡子映照出霧茫茫的、你的身影。
+
+能看到你的衣物與毛巾被整齊地擺放在旁邊，而門上掛著明智的外套和圍巾，沒有戴在手上的手套好像擺放在餐桌上。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:09 AM</span>
+
+            <div class="chatlog__message " data-message-id="958412491912802365" id="message-958412491912802365" title="Message sent: 30-Mar-22 01:09 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">看著鏡中倒映出自己的模樣，感覺鏡片也一起蒙上一層霧氣，抬手摘下眼鏡後視野反倒清晰了不少。
+將全身浸入熱水後，緊繃的神經隨之舒展開來，若非是這種情況，久違的在浴缸裡放空思緒然後摸一把摩爾加納也能說是簡單的享受。
+只可惜現況並不允許自己這麼做。
+
+對方身上的咬痕很明顯從何而來，可就算再怎麼絞盡腦汁也無法明白「治療」的意思。和自己突然出現的慾望有一定的關聯，像是野生動物一般的行動目標是有特定對象亦或是否定的答案，趁著放鬆的時間整理起目前的線索，拼拼湊湊後還是沒能看見真相的一角，只好暫且放棄並在被蒸氣熱昏頭之前離開這裡。
+
+隨意穿上替換用的襯衫，眼鏡上的霧氣尚未散去，只好先隨手掛在胸前的口袋上。
+出了浴室後瞥了一眼對方的衣物，隨後轉頭開始仔細調查起這間未曾見過的屋子。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 01:09 AM</span>
+
+            <div class="chatlog__message " data-message-id="958412712940023809" id="message-958412712940023809" title="Message sent: 30-Mar-22 01:09 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">整體的空間偏小，讓兩人能夠以最低限度的過活還是足夠的。
+
+側桌上放著明智時常配戴的手套，在那之下藏有什麼東西－－在挪開後，看見了明顯是他字跡的紙條，是在紀錄什麼。
+
+<div class="quote"><div class="quote-border"></div><div class="quote-content">【觀察紀錄】
+
+○第一日
+不論是這個房間抑或是治療都莫名其妙，……即使這樣還是簡單紀錄一下在這裡發生的事情。
+
+蓮像是變成了西方怪談那類的吸血鬼的存在。
+該說是捕食？咬人的慾望非常強烈，理性也很薄弱，基本無法交談。
+一天三次的啃咬，他還真是不留情，肯定會留痕跡。
+把人搬下來很累啊，總之今天結束了。
+
+○第二日
+咬完就睡，甚至連飯都沒吃，澡也沒洗。
+怎麼叫都沒反應，我也沒幹過這種事情……
+
+○第三日
+蓮的理智大概是開始恢復了，至少能簡單對話。
+咬人的衝動似乎還有，接著繼續治療應該就行了吧。</div></div></span>
+
+                                <span class="chatlog__edited-timestamp" title="30-Mar-22 01:10 AM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="958412815629185054" id="message-958412815629185054" title="Message sent: 30-Mar-22 01:10 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><div class="quote-border"></div><div class="quote-content">靈感</div></div></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/735505070195736587/12c95f0ef5e5d154063da4892e230e90.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="夜玥#9054" data-user-id="735505070195736587" style="color: rgb(147,0,0)">夜玥</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 01:11 AM</span>
+
+            <div class="chatlog__message " data-message-id="958413085423591464" id="message-958413085423591464" title="Message sent: 30-Mar-22 01:11 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">cc 85</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:11 AM</span>
+
+            <div class="chatlog__message " data-message-id="958413086602178610" id="message-958413086602178610" title="Message sent: 30-Mar-22 01:11 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="夜玥#9054">@夜玥</span> 
+1D100 ≦ 85：
+2 → 極限成功</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 01:12 AM</span>
+
+            <div class="chatlog__message " data-message-id="958413346162491483" id="message-958413346162491483" title="Message sent: 30-Mar-22 01:12 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">你的腦海中閃過記憶片段。
+
+不知為何，你們兩人在黑暗的走廊上奔跑，出口就在不遠處，明智就在前頭、絲毫不停歇的向前行。
+
+像是聽到什麼一樣，你看到他回過頭來，表情在那一瞬間浮現出驚訝、錯愕的神色－－
+
+『——蓮！』
+
+在稍微鬆懈精神的空隙中，身體突然像是被燒傷一樣傳來劇痛，和槍枝或是任何傷害帶給自己的疼痛不一樣。
+
+是搞砸了什麼嗎？誰也不知道。
+
+邪神的笑聲自遠處響起。
+衝動隨即萌芽而生——
+
+<span class="spoiler-text spoiler-text--hidden" onclick="showSpoiler(event, this)">與你相逃的人咬緊牙關，沒有猶豫的向你奔來。</span>
+
+<div class="quote"><div class="quote-border"></div><div class="quote-content">sc 0/1</div></div></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/735505070195736587/12c95f0ef5e5d154063da4892e230e90.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="夜玥#9054" data-user-id="735505070195736587" style="color: rgb(147,0,0)">夜玥</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 01:13 AM</span>
+
+            <div class="chatlog__message " data-message-id="958413607442452531" id="message-958413607442452531" title="Message sent: 30-Mar-22 01:13 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">.sc 75 0/1</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:13 AM</span>
+
+            <div class="chatlog__message " data-message-id="958413608495231026" id="message-958413608495231026" title="Message sent: 30-Mar-22 01:13 AM">
+
+
+                        <div class="chatlog__embed">
+                                <div class="chatlog__embed-color-pill" style="background-color: rgba(0,153,255,255)"></div>
+
+                            <div class="chatlog__embed-content-container">
+                                <div class="chatlog__embed-content">
+                                    <div class="chatlog__embed-text">
+                                            <div class="chatlog__embed-author">
+                                                    <img class="chatlog__embed-author-icon" src="https://images-ext-1.discordapp.net/external/3Lx0rapR2hJBS4woEUa0_oDMavhu5ifHB9TpeWhte0c/https/user-images.githubusercontent.com/23254376/113255717-bd47a300-92fa-11eb-90f2-7ebd00cd372f.png" alt="Author icon" loading="lazy" onerror="this.style.visibility='hidden'">
+
+                                                    <span class="chatlog__embed-author-name">
+                                                            <a class="chatlog__embed-author-name-link" href="https://www.patreon.com/HKTRPG">HKTRPG</a>
+                                                    </span>
+                                            </div>
+
+
+                                            <div class="chatlog__embed-description">
+                                                <div class="markdown preserve-whitespace"><span class="mention" title="夜玥#9054">@夜玥</span> 
+San Check
+1d100 ≦ 75
+擲出:91 → 失敗!
+失去1點San
+現在San值是74點</div>
+                                            </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 01:13 AM</span>
+
+            <div class="chatlog__message " data-message-id="958413723092009002" id="message-958413723092009002" title="Message sent: 30-Mar-22 01:13 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">便條紙下面還有一張寫得亂七八糟的紙條。
+
+<div class="quote"><div class="quote-border"></div><div class="quote-content">你好！明智吾郎先生！
+
+這裡是只屬於你們的、不受任何人打擾的空間，你要在這裡幫成了&quot;無法抑制捕食衝動&quot;的雨宮蓮先生治療！
+
+治療方式是“連續三天，每天讓他啃咬你的皮膚三次”就可以了！
+如果想知道更多細節，所有東西都放在樓上喲，有需要的話可以看看唷！</div></div></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:18 AM</span>
+
+            <div class="chatlog__message " data-message-id="958414808313630731" id="message-958414808313630731" title="Message sent: 30-Mar-22 01:18 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">簡單在周遭檢查一番後，最終順利找到幾張明顯是線索的紙條，卻在掃視過內容的同時顛覆了過去所建立起的認知——在經歷過異世界還對此感到訝異，或許被誰看到的話還會被嘲笑一番吧。
+還未將文字訊息帶來的情報全數消化，奇妙的畫面便先一步壓過所有理智，迫使自己去面對被潛藏在記憶角落的碎片。
+
+發生、什麼了……
+
+待唐突而來的頭疼稍許消緩，這才又重新看過一次兩張紙條上的內容。在困惑的同時也暗自感慨著明智對於自己寬容似乎上升了不少。
+放在年前，他必定不會願意為自己犧牲任何一點事物。
+
+記錄的便條紙還是決定保持原樣並重新用手套壓回去，另一張不知道是出自於誰手的紙條則是折了兩折便收進口袋裡。
+如果上面的內容屬實，那麼今天就是第三天了嗎？可腦中沒有任何啃咬過對方的記憶，也無法判斷那個「三次」是如何計數。指腹下意識搓弄著瀏海，最後只是嘆了口氣。
+
+回頭再向對方確認吧，他應該是去紙條所寫的「樓上」了。
+整理好側桌桌面，隨後走向離自己近一些的餐桌附近。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:22 AM</span>
+
+            <div class="chatlog__message " data-message-id="958415911625306132" id="message-958415911625306132" title="Message sent: 30-Mar-22 01:22 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「洗好了？」
+
+不久前還聽見的聲音從走廊的一端傳來，原本不在房間的明智似乎從剛剛就一直待在廚房，至少他此時正拿著一人份的餐點走到你的面前，並把食物放到餐桌上，很明顯是剛微波好的。
+
+「雖然幾天不吃也不至於餓死，但不習慣的人胃估計也要受不了。」
+
+明智拉開了椅子端正的坐下，示意人坐到對面把那份餐給吃掉。
+
+「擔心我做什麼手腳的話也可以自己去廚房做飯，我記得你挺拿手的。」至少泡的咖啡不錯。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 01:22 AM</span>
+
+            <div class="chatlog__message " data-message-id="958415934664634399" id="message-958415934664634399" title="Message sent: 30-Mar-22 01:22 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><div class="quote-border"></div><div class="quote-content">靈感</div></div></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/735505070195736587/12c95f0ef5e5d154063da4892e230e90.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="夜玥#9054" data-user-id="735505070195736587" style="color: rgb(147,0,0)">夜玥</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 01:23 AM</span>
+
+            <div class="chatlog__message " data-message-id="958416017518919710" id="message-958416017518919710" title="Message sent: 30-Mar-22 01:23 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">cc 85</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:23 AM</span>
+
+            <div class="chatlog__message " data-message-id="958416019607683152" id="message-958416019607683152" title="Message sent: 30-Mar-22 01:23 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="夜玥#9054">@夜玥</span> 
+1D100 ≦ 85：
+4 → 極限成功</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 01:23 AM</span>
+
+            <div class="chatlog__message " data-message-id="958416197462933534" id="message-958416197462933534" title="Message sent: 30-Mar-22 01:23 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">在坐下之前，能夠隱約的憶起，在清醒之前、再更之前好像曾見過什麼……
+
+一幕場景唐突的自腦海中閃過。 
+
+領口大開的明智吾郎被「誰」推倒在那張餐桌上，身子壟罩在「誰」的陰影之下，你不可能不知道這是「誰」的影子。
+
+眼前少了無度數鏡片的阻隔，耳際間能聽到嘎吱嘎吱，像是咬著牙又或是嘶啞的聲響，距離不遠不近，正是從視角的主人身上傳來——
+
+<em>『我想要你。』</em>
+
+不會搞錯的。
+
+這是再熟悉不過的，屬於你自己——「雨宮蓮」的聲音。
+
+就像是變成野獸或是什麼一樣，因為意志或是什麼而抑制不住衝動，只剩下撕咬、吞噬、用明智吾郎來填滿口腔的慾望。
+
+那是怎麼樣的的一種畫面？被以強勢完全壓制、明顯還未掌控到任何狀況的偵探不可置信的瞪大雙眼，他啟口、不停的呼喚著屬於你的名字。
+
+而，在缺乏理智下思考的你只能任由莫名的慾望擺佈，直到牙齒附著於軟肉上，直到那股衝動因為<strong>咬住了什麼</strong>而平息，直到你聽見再也抑制不住的吃痛聲、低喘聲，以及無可奈何的嘆息。
+
+與此同時，周遭的景色慢慢模糊，夢中的自己似乎維持侵略一樣的行為，迷迷糊糊地睡著了。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:28 AM</span>
+
+            <div class="chatlog__message " data-message-id="958417263889891328" id="message-958417263889891328" title="Message sent: 30-Mar-22 01:28 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">超乎自己的預想，沒有料到對方仍在室內，輕輕應了聲表示回答，見他端著微波食品時還是皺了皺眉。
+「只吃這個對身體不好。」
+並不擔心對方在微波食品下毒，一來這個空間不像是有毒物的存在，二來是他想要的話隨時可以動手，並不用特別等到現在。
+
+就算是明智也不能總吃微波食品，記得一次和他在爵士酒吧的對談提及這個人平時總吃這種東西，想了想還是伸手接過那盤食物，「料理的話，有稍微跟老闆學過一點。」
+並不敢自稱擅長，最多也只是能上朋友餐桌的程度罷了。
+
+正打算重新準備兩人的正餐時，和剛才同樣的感覺再次襲捲全身，為了穩住身子而以掌心撐著桌面，俯視的視角卻彷彿和擅自闖入腦中的畫面重疊，那人錯愕的神情、被迫敞開的衣領——未曾聽過的呼喚，無一不是向著「自己」。
+
+先前清晰可見的咬痕再次烙印在眼中，隨著動作淌流而出除了鮮血以外還有身下人微弱的呼吸聲。就像事發現場一樣，口中仍能嚐到鐵鏽味，自己的表情究竟是如何，才會連這個人也束手無策。
+
+<em>——「我想要你。」</em>
+
+不是這樣的、不該是這樣的——理智不斷敲響警鈴，本能卻無法抑制。
+自己對這個人到底抱持著什麼慾望，才會演變成這場鬧劇。
+他又是，為什麼要與之起舞。
+
+回過神時才感覺冷汗淋漓，令人不適的畫面尚未從眼前消散，不同於「回憶」，現實中真正喘著氣的人是自己，不能保證這副模樣沒有被對方注意——說實話，或許還是被看見的可能性比較大。
+
+再次站起身，在頭痛減緩不少後才走進廚房。姑且秉持著不浪費食物的想法還是沒有直接處理掉微波食品，而是配合著廚房裡現有的食材重新做出兩人份的主食。
+
+「明智也吃點。」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:28 AM</span>
+
+            <div class="chatlog__message " data-message-id="958417404579438622" id="message-958417404579438622" title="Message sent: 30-Mar-22 01:28 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「吃這麼久我也沒出事，活的可好。」
+
+明智準備的餐點份量也只有一個人的，估計是這一餐沒打算進食，又或是覺得沒有這個必要，手臂撐在桌面上，隨口應答了對方的話，「反正也不是我要吃的……嗯？」
+
+在相處時總是注視著怪盜的雙瞳幾乎是立即察覺到對方的不適，並不知曉你究竟見到了什麼而不好說話，又或是也未能搞明白這一切而噤聲。
+
+明智此刻是沉默著，是判定這時還不需要協助嗎？但仍能感覺到對方的目光直至你進入廚房後也依舊存在。
+
+接著是被擺上餐桌的料理，不擅長下廚的人盯著那份主食，微微挑起了眉。
+
+「多謝你的好意，但我不餓。」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:29 AM</span>
+
+            <div class="chatlog__message " data-message-id="958417571189768293" id="message-958417571189768293" title="Message sent: 30-Mar-22 01:29 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「現在這個情況，吃一點比較好。」把盤子又推靠近那人一些，隨後坐到了他的對面，說了聲「我開動了」便動起湯匙，好一會兒才抬眸看向那人，「更何況，明智也不會希望在我身下暈倒的，對吧？」
+說著這話的同時，唇角也不由自主的揚起，憶起對方的不服輸，適當的激將法自然能夠順利將局勢帶往自己希望的方向前進。
+而這也是你所教會我的。
+
+除此之外，擔憂對方的身體也是真心話；即便自己沒有真實做過那些事情的記憶，僅僅只是看見怵目驚心的傷痕，也能明白當時的自己是抱持著「將這人生吞活剝」的想法行動。
+
+將這一餐作為謝意及賠禮，無論是哪一邊都遠遠不夠。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:29 AM</span>
+
+            <div class="chatlog__message " data-message-id="958417680208121886" id="message-958417680208121886" title="Message sent: 30-Mar-22 01:29 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「你這傢伙……」這句話成功觸發了明智不願向人低頭的性格，斂下眼，看著那份食物，輕嘖了聲。
+
+策劃、蟄伏、伺機行動，為了應付千百種可能性而預先安排無數條後路，卻唯獨面對眼前總是給人意外的怪盜完全沒辦法派上用場。
+
+這是敗北嗎？
+不，並不是，也絕不會承認。
+
+隨便吃幾口應付一下就行了吧－－用不著糾結多久，坐在面前的明智便執起湯匙，吹散了熱氣，這才將食物送入口中。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:30 AM</span>
+
+            <div class="chatlog__message " data-message-id="958417848286453782" id="message-958417848286453782" title="Message sent: 30-Mar-22 01:30 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">見對方不悅也仍然進食的動作，懸吊著的情緒這才放鬆下來，不發一語的慢慢解決面前的餐點。
+直到餐盤空無一物，視線也挪回餐桌對面的人。
+
+「明智。」
+伸手取出剛才找到的紙條並攤平放到他的面前，這個人知道些什麼，所以得從他口中套出情報——已經不是這樣的關係了。
+勾心鬥角的日子早該結束，縱使還不清楚面前的人在那晚的結局，他們之間也不必再疑心暗鬼。
+「關於這個，你知道多少。」
+
+何況有的時候，或許不顧後果的進攻能得到意想不到的結果。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:30 AM</span>
+
+            <div class="chatlog__message " data-message-id="958418001663766599" id="message-958418001663766599" title="Message sent: 30-Mar-22 01:30 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">早早的就停下了用餐，雖說吃的不多，但總歸是有一些東西墊胃。
+沒有對這份餐做出任何評價，平平淡淡的神情也稍微能推測出應該是不差的－－然而在見到對方拿出的那張紙條後，明智臉上的表情在眨眼間有些怪異。
+
+「不知道。」手背撐著下顎，一手的手指敲著桌面，是老實的、還是有隱瞞的將話說出來。
+
+「在你睡著的這段時間我尋找過出口，但這裡連出去門都沒有，只有那扇窗戶。」指了靠床並被窗簾遮蓋住的窗口。「但不能靠窗戶逃離，外頭比你以往看見的殿堂還要危險。」
+
+「被莫名其妙關在這還要遵照指示很不爽啊……嘛，反正大概是最後一天了。」
+
+「去床邊等著，我等等過來。」明智在說完這句話後便起身，把兩人的餐具收走後去往廚房了。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:32 AM</span>
+
+            <div class="chatlog__message " data-message-id="958418275711205406" id="message-958418275711205406" title="Message sent: 30-Mar-22 01:32 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">那個人比誰都厭惡被迫服從，卻還是勉為其難的聽從紙條上的指令。沒有出口……
+
+望著對方走進廚房，將那張紙條再次收起，隨意又在屋內轉了一圈後才戴上眼鏡並回到床邊，這時才想起沒能問到有關於「樓上」的事情。
+一會兒再問問他吧。
+
+按他的說法，似乎是能夠透過窗戶看見外頭的情況，盤算著若沒有比印象空間和澀谷融合的景象危險就拉著他出去，同時伸手拉開了窗簾。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 01:32 AM</span>
+
+            <div class="chatlog__message " data-message-id="958418415083733062" id="message-958418415083733062" title="Message sent: 30-Mar-22 01:32 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">你拉開了窗簾，一眼便能看到外頭。
+
+看不見底、望不到天，這裡並不是你所知的澀谷、也沒有印象空間那還有所能夠辨識出的建築等，而是不知哪裡才是盡頭、又或是哪裡才是起始的扭曲地帶。
+
+明明是一片黑暗，卻又浮現了許多字母。
+
+<div class="quote"><div class="quote-border"></div><div class="quote-content">SC 1/1D3。外加偵查。</div></div></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/735505070195736587/12c95f0ef5e5d154063da4892e230e90.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="夜玥#9054" data-user-id="735505070195736587" style="color: rgb(147,0,0)">夜玥</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 01:33 AM</span>
+
+            <div class="chatlog__message " data-message-id="958418516132892802" id="message-958418516132892802" title="Message sent: 30-Mar-22 01:33 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">.sc 74 1/1d3</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:33 AM</span>
+
+            <div class="chatlog__message " data-message-id="958418518544613407" id="message-958418518544613407" title="Message sent: 30-Mar-22 01:33 AM">
+
+
+                        <div class="chatlog__embed">
+                                <div class="chatlog__embed-color-pill" style="background-color: rgba(0,153,255,255)"></div>
+
+                            <div class="chatlog__embed-content-container">
+                                <div class="chatlog__embed-content">
+                                    <div class="chatlog__embed-text">
+                                            <div class="chatlog__embed-author">
+                                                    <img class="chatlog__embed-author-icon" src="https://images-ext-1.discordapp.net/external/3Lx0rapR2hJBS4woEUa0_oDMavhu5ifHB9TpeWhte0c/https/user-images.githubusercontent.com/23254376/113255717-bd47a300-92fa-11eb-90f2-7ebd00cd372f.png" alt="Author icon" loading="lazy" onerror="this.style.visibility='hidden'">
+
+                                                    <span class="chatlog__embed-author-name">
+                                                            <a class="chatlog__embed-author-name-link" href="https://www.patreon.com/HKTRPG">HKTRPG</a>
+                                                    </span>
+                                            </div>
+
+
+                                            <div class="chatlog__embed-description">
+                                                <div class="markdown preserve-whitespace"><span class="mention" title="夜玥#9054">@夜玥</span> 
+San Check
+1d100 ≦ 74
+擲出:44 → 成功!
+失去1點San
+現在San值是73點</div>
+                                            </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/735505070195736587/12c95f0ef5e5d154063da4892e230e90.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="夜玥#9054" data-user-id="735505070195736587" style="color: rgb(147,0,0)">夜玥</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 01:34 AM</span>
+
+            <div class="chatlog__message " data-message-id="958418814134013962" id="message-958418814134013962" title="Message sent: 30-Mar-22 01:34 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">cc 70</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:34 AM</span>
+
+            <div class="chatlog__message " data-message-id="958418815266459709" id="message-958418815266459709" title="Message sent: 30-Mar-22 01:34 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="夜玥#9054">@夜玥</span> 
+1D100 ≦ 70：
+60 → 通常成功</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 01:34 AM</span>
+
+            <div class="chatlog__message " data-message-id="958418958141259806" id="message-958418958141259806" title="Message sent: 30-Mar-22 01:34 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">你注意到在那片黑暗中有著什麼數字：.69、.112、.34
+
+除此之外沒什麼特別的了。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:35 AM</span>
+
+            <div class="chatlog__message " data-message-id="958419155160289400" id="message-958419155160289400" title="Message sent: 30-Mar-22 01:35 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">隱約的自廚房那傳來些許水聲，要不了多久後便停止，明智的身影也在隨後再度出現，同樣瞥了一眼外頭的景象。
+
+「我想你還不至於傻到會做出明顯是自殺式的行動。」言意之下就是別想了，他自顧的坐到了床邊。
+
+是因為做過了許多次嗎？又或是認為這對他來說無所謂，明智將不久前扣好的扣子一一解開，他未選擇將襯衫完全褪下，而是只露出了被啃咬並留下明顯痕跡的肩頸和胸膛。
+
+「該治療了，蓮。」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 01:35 AM</span>
+
+            <div class="chatlog__message " data-message-id="958419196990083072" id="message-958419196990083072" title="Message sent: 30-Mar-22 01:35 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">白皙的肩頸暴露在空氣與你的視野中，某種異樣的香味也撲鼻而來。
+
+<em>——真想咬住不放，想品嚐在那底下流淌的血液。</em>
+
+⋯⋯你不禁這麼想著。
+
+<div class="quote"><div class="quote-border"></div><div class="quote-content">POW＊4檢定。</div></div></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/735505070195736587/12c95f0ef5e5d154063da4892e230e90.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="夜玥#9054" data-user-id="735505070195736587" style="color: rgb(147,0,0)">夜玥</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 01:35 AM</span>
+
+            <div class="chatlog__message " data-message-id="958419236659794011" id="message-958419236659794011" title="Message sent: 30-Mar-22 01:35 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">cc 60</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:35 AM</span>
+
+            <div class="chatlog__message " data-message-id="958419238211706880" id="message-958419238211706880" title="Message sent: 30-Mar-22 01:35 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="夜玥#9054">@夜玥</span> 
+1D100 ≦ 60：
+81 → 失敗</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:38 AM</span>
+
+            <div class="chatlog__message " data-message-id="958419798218391582" id="message-958419798218391582" title="Message sent: 30-Mar-22 01:38 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">聽見對方的聲音於是扭過頭去看向他，對於方才看見的一切還沒能去理解一二，以至於對方出言嘲諷的同時沒有給予回應，而是愣愣的看著他也坐到床緣邊。
+他的皮膚很白，白的病態，顯得那些咬痕愈發惹眼，而一切都裸露在空氣中——毫無隱晦的揭露在自己眼底。
+
+難耐的慾望同樣被對方的作為毫不留情的撥弄起來，下意識倒抽一口氣，宛如邀約的語句輕而易舉擊破了所有防線，理智逐漸被啃蝕殆盡，一如自己正將對方壓於身下。
+輕輕的在他脖頸間蹭著，眼前什麼也看不見，左手似乎死死<strong>掐著什麼</strong>，可那股甜味迫使自己不去思考——什麼都不要看、什麼都不要想，直到利牙劃破肌膚，直到血液流入喉間。
+
+<em>明智。</em>
+
+還不夠，慾望仍在心底叫囂，舌尖勾走一切鮮紅的液體，苦味在口中發酵，呼吸也隨著自己的動作不再規律。還不夠，還要更多。
+——想把這個人的一切佔為己有。
+
+左手鬆開了原本拘束住他的力道，指腹順著軀體向下，亞麻色的髮絲、酒紅色的眼眸，視線因缺氧模糊不清，唯一能感受到的唯有對方的氣息。
+不要走，明智。你為什麼看上去如此悲傷？
+
+<span class="spoiler-text spoiler-text--hidden" onclick="showSpoiler(event, this)">——為什麼你離死亡如此的近。 </span></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:39 AM</span>
+
+            <div class="chatlog__message " data-message-id="958420176490082414" id="message-958420176490082414" title="Message sent: 30-Mar-22 01:39 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">被突如其來的強勢力量壓制於床上，這樣的情況在過往發生過無數次，對於明智來說也早已習以為常－－只是這三天面對的是雨宮蓮，被自己視為勁敵的怪盜團團長，說沒有心情複雜是假的，但面對現況，也只能對未知的存在以及無法逃脫的空間所屈服，即使再不甘願。
+
+再經過幾次的治療就能離開這裡了，正打算開口的同時－－
+
+「－－呃、！？」
+
+要死了嗎？來自喉間的禁錮逼迫著張開口呼吸著稀薄空氣，抓撓著緊掐頸脖的手和身上人的衣服，蒼白的臉龐漲紅著，雙腿嘗試踢著蹬開失去理智的雨宮蓮，力氣卻隨著缺氧而逐漸消弱。
+
+「嗚、……」在迎來啃咬時的疼痛發出微弱的嗚咽，飄渺的意識有一瞬的恍惚。
+
+－－為什麼要幫助雨宮蓮治療？
+
+對於早該葬身於那片大海、那艘象徵慾望的船艦之中，任憑冰冷的海水包裹住的自己就算不幫助對方，他也必定能夠尋到辦法……又或是他的那些夥伴們也會前來迎他離去，並且熱鬧的替他思考著解決的辦法。
+
+為什麼呢？
+是因為享受著被依賴的感覺嗎？在這個不被需要的這個世界上，被任何一個人……被雨宮蓮這個人需要著。
+只有兩人，沒有旁人，沒有那些吵鬧和令人厭惡的大人們，沒有過往對立的關係。
+
+只有我和你。
+
+即使是這樣的關係，也能讓自己滿足嗎？
+真是可笑啊。
+
+「咳、哈啊、啊……」流下的淚水只會將其歸類在生理現象，鬆開限制而大口吸入空氣，失血以及缺氧的昏沉讓人癱軟、無法行動，白色的床單滴落了些許艷紅，發白的唇邊不知何時流下唾液，凌亂的衣裳、兩道急促的呼吸聲。
+朦朧的酒紅色微微瞇起，注視著失去理智的黑。
+
+沒有出聲，是默許嗎？
+<span class="spoiler-text spoiler-text--hidden" onclick="showSpoiler(event, this)">唯有還在跳動的心臟證明這一切。</span></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:41 AM</span>
+
+            <div class="chatlog__message " data-message-id="958420704326484048" id="message-958420704326484048" title="Message sent: 30-Mar-22 01:41 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">小心翼翼的舔舐著方才流出鮮血的位置，對方口中流露的所有聲音在逼近猖狂的本能下被放大無數倍，能聽見他活著的證明——能感受到人在自己的禁錮之中。
+
+以雙手支撐起自己的身體，拉開的距離依然看不清對方的表情，無法聚焦的目光落在那人側頸的點點痕跡上，模糊不已，卻仍然有著極大的吸引。
+再次俯身靠近他的耳邊，滿意於彼此之間的瘋狂，輕笑了聲隨後以牙在耳骨上留下齒痕。
+
+沉淪慾望之中是不被允許的。指尖沿著曲線在那人早已斑跡勃勃的身體游移而沒有得到任何抵抗，鏡片下的那人是自己未曾見過的狀態，脆弱的令人心寒——同時也引人垂涎。
+
+也許自己對於這個人抱持著不被認可的感情，只是從未正視。喜歡、愛，殘存的理智告知自己現在不是時候，不可控制的本能在追求更加深入。
+不是這樣的，不該是這樣——真的沒有人在追求那樣的結局嗎？
+
+手指碰到了什麼冰涼的東西，三兩下解開了對方下身唯一的庇護，沒有任何調情的意味存在，有的只是渴求更多的這個人。
+指腹按壓著那人前端，並不熟練的動作沒有妨礙接下來所要進行的動作；掌心包覆住那人的全部，無視了一切後果，就著本能驅使隨即低下頭去舔舐並啃咬對方最為脆弱的部分。
+
+何謂反抗、何謂順從——</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:43 AM</span>
+
+            <div class="chatlog__message " data-message-id="958421164580044830" id="message-958421164580044830" title="Message sent: 30-Mar-22 01:43 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">舌苔舔舐而過的肌膚伴隨而來的是傷口的疼痛以及說不明的搔癢，但這並不妨礙眉頭皺了皺，以及口中發出的輕哼。
+許是不想讓眼前的人看見自己的表情－－也不清楚這時已經治療過的蓮是否恢復理智了，誰管他。於是明智撇過了頭，想著再怎麼超過也不至於更越界……
+
+直到一股熱氣灑在耳邊，咬住耳骨的疼讓人倒抽口氣，齒痕與羞恥的紅色混合在一塊，逐漸恢復的力氣又不知該如何運用，甚至產生了就這麼放縱下去也行的念頭。
+
+有什麼關係嗎？畢竟墮落的自己怎麼樣都無所謂，如果這樣骯髒的身軀是對方所渴求的，那麼給予出去並不是困難的一件事情。
+
+我想要什麼－－這樣的問題過於奢侈，一生中也不曾有誰詢問過。一無所有的明智吾郎所渴求的不過是普通且平凡的，隨處可見、對他來說卻是無比遙遠到無法伸手碰觸的情感以及羈絆。
+
+被動接受這般對待的自己是否也在試圖從雨宮蓮的身上卑微的偷取一絲的溫暖，即使無法看穿他的想法、他的內心，又或是無視<span class="spoiler-text spoiler-text--hidden" onclick="showSpoiler(event, this)">害怕？</span>對方清醒時的反應，怎麼樣都好。
+粗魯的行動、不帶愛情的性？怎麼樣都好。
+
+「……痛死了，鬆嘴。」你不該是做這種事情的人。手掌試著想要推開雨宮蓮的腦袋，即使性器仍因此有了些許反應。
+
+「我教你。」由我來做就行了。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:45 AM</span>
+
+            <div class="chatlog__message " data-message-id="958421611227258880" id="message-958421611227258880" title="Message sent: 30-Mar-22 01:45 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">被人推開的同時，近乎喪失作用的視力逐漸恢復正常，屬於那人的氣味並未消散，口中還殘留著屬於鮮血及荷爾蒙的味道，對於剛才自己的所作所為又是一陣模糊，詫異的抬眸卻將對方狼狽的模樣盡數收進眼底。
+喪失理智時的所有行動盡不在記憶之中，翻滾許久的感情此時像是沸騰一樣，有什麼沿著眼角緩緩流下。
+
+最後捕捉到的僅有他的一句話，可那是什麼意思？思考能力連同理智一同拋至腦後，目光順著對方下身看去，視覺帶來的衝擊很快就告訴自己這代表了什麼。
+也將剛才所做的一切證據明確擺在眼前。
+
+過量的資訊再一次使得自己沒能做出任何反應。簡單一句話背後有多少含義，關於明智吾郎這個人自己又了解多少，他所說的一切真假難辨，可唯一的確定的是，有時他所表露出來的寂寞不容質疑。
+他說過，爵士酒吧是第一次帶人過去，談話時第一次有人會去反駁他，過於私人的事情是第一次在澡堂談起——他的過去是孤獨的，明明是再往前一步就能知曉的事實，自己卻在抓住他之前先收回了手。
+
+想知道更多。人類是貪婪的，對於喜愛的事物總想著得到滿足，所以怪盜團為此誕生。現在的自己是否也成為需要悔改的對象，答案無從得知——異世界導航已經消失了，連同異世界的摩爾加納。
+即便如此，自己也不會對此感到後悔；唯一悔恨的過去在見到這人的當下便不復存在，至今仍然回答不出這份情感名為何物，只是這一次不想再鬆開手。
+
+沒有出言道歉，在終於理解那句話的意義後也只是收斂起眼色，隨後伸手將他整個人擁入懷裡——不同於最初，這個擁抱帶有在這之上的意味。
+
+「……別這麼說。」還請你，不要如此踐踏自己。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:45 AM</span>
+
+            <div class="chatlog__message " data-message-id="958421733969383445" id="message-958421733969383445" title="Message sent: 30-Mar-22 01:45 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">注視著逐漸恢復清明的耀黑，沒有即將失去方才溫暖的恐慌，畢竟自始至終都認為那並不屬於自己。
+
+或許不久前的一切都和前兩日一樣並不會在對方的記憶裡留存，那或許是一件好事，總不會讓對方覺得虧欠自己，人情這種東西總是越欠越多，也會增加未來相見的機會－－會想見嗎？不如不見吧，這段孽緣早該結束了，在交託了令獅童悔改的約定、為怪盜團斷後的那一時候，還待在這裡不過是被迫的……只能如此提醒自己。
+……那為什麼要回頭去伸手呢，卻也不願去思考這件事情，只怕越陷越深。
+
+「……這句話又是什麼意思？」是同情嗎？是憐憫嗎？少少的幾句話和流露而出的眼神能讓明智吾郎去分析拆解旁人的想法，唯獨無法肯定雨宮蓮的內心究竟在想什麼，就如同對方未曾理解過他的一切。
+
+用盡恢復的力氣硬是將對方壓上了床墊，立場對調，自上俯視著可敬可憎的人類。
+
+「我就是這樣的人，你失望了嗎？」吐出的話毫不留情的攻擊著，到底是針對對方，還是作賤自己，又或是兩者皆是。
+
+「你想知道嗎，蓮？我想親自體驗比較快吧，我是怎麼做的。」伸手摘下了礙事的眼鏡並隨手扔到一旁，手指靈巧的滑過身下人袒露的胸口，再下便隔著褲檔適當力道的揉弄。
+雖然笑著，但那酒紅色的眼裡卻絲毫未帶有笑意。
+
+「只要你想。」低下頭，模仿著之前的舉動在他耳邊輕語，做過無數次的行動自然是上手的，拉下拉鍊的聲音能夠明顯聽見，握上了性器熟練套弄著。「……你就能得到我。」
+
+就像是瘋狗一般的嘶咬腐肉生存，受傷也不再去舔舐，最終靜默的等待死亡的到來。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:47 AM</span>
+
+            <div class="chatlog__message " data-message-id="958422189479198790" id="message-958422189479198790" title="Message sent: 30-Mar-22 01:47 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「……！」
+視角產生天翻地覆的變化，頭幾乎是撞上床鋪，帶來的衝擊讓眼前一時半會兒陷入一片黑暗，唯能聽見對方慍怒的話語。
+什麼意思？聰明伶俐的偵探僅僅摸不透自己所想，失去眼鏡後更能清楚描繪出對方悲傷的神情——他不會承認的，所有的孤單都會被他以輕鬆的口吻包裝帶過。
+
+下身被對方把玩著，思緒過於混亂的現在難以預判他接下來的動作，只能直視那雙寒冷的眼眸，在他湊近耳畔邊時抬手將他的頭壓在自己肩上。
+「沒有失望的理由。」因慾望被挑逗起來，口乾舌燥的感覺讓自己的聲音顯得沙啞，側過頭好讓自己的話能清楚傳入對方耳中，頓了頓才繼續說道：「如果這是你的過去，就沒有失望的理由。」
+
+沒有推開對方的動作默認同意繼續，對於對方最後一句話沒有去回應，只是不樂見於此而皺起眉頭。
+沒有人能夠得到你，你不是屬於誰的玩物。掌心輕撫著對方腦袋，有時摩爾加納被這樣對待會感到放鬆，不過這個人不是摩爾加納，就算生氣了也無可厚非。
+
+陌生的天花板和微弱的燈光再次佔據視線範圍，順著生理反應去調適呼吸頻率，相貼的身軀能感受和自己相對的心跳正在跳動著。
+
+<span class="spoiler-text spoiler-text--hidden" onclick="showSpoiler(event, this)">你還活著。</span></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:48 AM</span>
+
+            <div class="chatlog__message " data-message-id="958422440667664454" id="message-958422440667664454" title="Message sent: 30-Mar-22 01:48 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">被如此對待是意想不到的，竄入鼻尖的沐浴香味與自身相同，卻又參雜著他自身專屬的氣味，手上的動作短暫的停了下來。
+不同於壓下腦袋逼迫自己去含入過重氣味的男根，不同於吐出惡劣話語的那些嘴舌，不同於嘲諷否定自己一生的大人們－－眼前的人沒有否決一切。
+
+「為什麼？」在提出這句問題時就已經不像以往的作風，語氣回歸於平淡，甚至有些沉悶的。
+他不解，周邊的人在明白他的過往時必定會露出自己不願見到或是已經習慣的情緒：厭惡、嘲笑、貶低、輕視，甚至憐憫以及同情都是少數，沒人會去在意一個墮落者。
+以至於在面對這個人時產生了迷惘。
+
+「你可以把我推開的。」在一切都要失控以前。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:50 AM</span>
+
+            <div class="chatlog__message " data-message-id="958422888267022357" id="message-958422888267022357" title="Message sent: 30-Mar-22 01:50 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">收起為了轉移注意而想著無關緊要事情的思緒，注意到對方停下動作，正打算開口出聲，他的問句先一步打斷自己，隨即而來的是最不想聽見的話語。
+有些生氣的抓住對方的手並且趁著他明顯恍神的同時再次奪回主導權。就算是判決的那一天也沒有感到如此氣憤，現在回頭去想也正是那場誣衊讓自己得以與大家相遇，可剛才那番話卻讓自己打從心底深處湧起怒意。
+
+「為什麼你總是這樣！」不自覺提高的音量讓自己也嚇了一跳，可想說的話和淚水就像潰堤一般無法止住，已經沒有理由再繼續忍耐了吧？「把你推開之後不過只是無謂的增添傷痕，做這種事也解決不了問題。」
+視線因為眼淚又再次模糊不清，飄渺之中只能勾勒出身下人的輪廓。想再見一面的，只有自己嗎？
+
+就像是報復性的行為，自從對這個人的過去有一定程度的猜測後，本不打算同他墮落深淵，無處安放的憤怒卻驅使著自己伸手朝他的下身撫去，指尖毫不猶豫探入裡頭，乾澀的感覺反而引人發笑。
+
+「我不會把你推開的。」
+<span class="spoiler-text spoiler-text--hidden" onclick="showSpoiler(event, this)">不會再讓你擅自離開了。</span></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:51 AM</span>
+
+            <div class="chatlog__message " data-message-id="958423059243606016" id="message-958423059243606016" title="Message sent: 30-Mar-22 01:51 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">再度被壓於身下，一指的前端未有潤滑就深入的感覺絕不能稱上好，但更難受的性也不是沒有做過，姑且是還能夠忍受並且配合的。
+
+或許早就知道這句話會激怒他人，卻沒料到對方會如此激動。
+為什麼要生氣？這對於你我來說不是最正常不過的事情不是嗎？意外交叉的兩條平行線本就該回歸於各自的位置上－－落下的淚水卻重重的敲在心上。
+
+「你哭什麼啊……」在反應過來以前手便先伸了過去，捧住了流下眼淚的臉龐。
+就算是平時也只會拿出手帕讓人擦乾，那是不想過度碰觸他人的軀體，此時卻笨拙的想要為他抹去那些不該出現在他臉上的情緒。
+
+「要哭也是我才是。」但落淚的資格真的有嗎？在遇上常人該悲傷的時候，內心的深處也僅剩下習以為常的沉悶罷了。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:52 AM</span>
+
+            <div class="chatlog__message " data-message-id="958423328597622834" id="message-958423328597622834" title="Message sent: 30-Mar-22 01:52 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「沒見你哭過……」悶悶的應了他一句，因為他的行動被迫閉起眼睛，少有的感受著對方的溫度，下意識蹭了蹭對方的掌心，自己手上的動作也選擇中止——本就是因在氣頭上做出的事情，繼續下去哪怕這個人擺出無所謂的態度，也會讓自己變得像過去無視對方意願的成年人一樣。
+
+小心的抽回手指深怕剛才的動作讓他哪裡受傷，就算清楚這個人堅強的令人心疼，身體上的傷痕也是自己不曾接觸的領域，更不用說這種事情幾乎只在書上看過，羞恥的情緒這才蔓延全身。
+
+迅速的放開對方，低下頭能看見因為一連串事情起的生理反應，不太願意直視讓人尷尬的場景，只好別開視線背對著那人開口：「明智……也去洗個澡嗎？」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:52 AM</span>
+
+            <div class="chatlog__message " data-message-id="958423516741521448" id="message-958423516741521448" title="Message sent: 30-Mar-22 01:52 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「因為沒什麼好哭的。」這是實話，自己的身邊在過去並沒有會因為自己落淚而能夠依靠的人，也沒有難過時會給予擁抱的溫暖，倒不如把無用的情感給拋棄，將注意力放到如何達成自己的目標……那現在呢？
+
+「但我現在倒是見到你哭了。」若有所思的注視著尷尬退開的雨宮蓮，對現在的氣氛沒有感覺到哪裡奇怪，明智慢慢從床上起身，不用想也知道對方發生什麼事情。
+
+「晚點再洗也不遲。」這句話意有所指，拉上了襯衫的領子先是下了床，赤著腳先是往浴室的方向走去，要不了多久後便拿著一樣物品回到床邊。「反正還是會弄髒，繼續？」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:54 AM</span>
+
+            <div class="chatlog__message " data-message-id="958423856861839410" id="message-958423856861839410" title="Message sent: 30-Mar-22 01:54 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">不明所以的看著他起身走向浴室，還不明白他離開時所說的話是什麼意思，就看見那人拿著暗示性極強的東西回來。很快就理解了對方想做什麼，伸手接過陌生的條狀軟膏，像是為了逃避現實而開始仔細打量軟膏上的成分名稱，在看完兩行學名後才放棄這種毫無意義的舉動。
+仍舊不清楚這個人在想什麼。將視線移到他的身上，襯衫領口還是遮掩不住那些痕跡，野性的慾望又一次和理智抗爭，啞著嗓子讓他躺下後才動手抹上潤滑。
+
+膏狀液體接觸溫度時會迅速融化，此時也是如此。就著液體再次探入對方私處，不同於數十分鐘前的難以動作，雖稱不上暢行無阻，也比剛才一不小心就會弄傷他的情況要好。
+少有的想著這些事情，頭腦幾乎快要無法正常思考，心跳聲很吵，密閉的空間讓熱意不斷上升，對這個人的渴求也同樣膨脹。
+
+不清楚前戲做到什麼程度要好，僅存的正常思考只能督促自己不能傷到對方。手指慢慢的探進第二指並且模擬著性交的動作抽插起來，呼吸也因為不該想像的畫面開始加重。
+
+——想把這個人弄得糟糕透頂。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:54 AM</span>
+
+            <div class="chatlog__message " data-message-id="958423996012040212" id="message-958423996012040212" title="Message sent: 30-Mar-22 01:54 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">看著這人從困惑到錯愕、逃避到接受現實的所有情緒轉變，饒有興趣的開始推測他接下來會有什麼樣的反應。
+雖然說這樣是在犯罪－－反正兩人都做過不少，尤其自己更是罪不可赦，這種事也就拋到腦後了。
+
+聽從著對方指示重新躺下，亞麻色的腦袋枕在了白色的枕頭上後，酒紅的眼眸眨眨的注視對方漲紅的臉龐，以及感受著手指小心翼翼的探入深處－－比起之前的感覺要好上不少，不過這人真的沒經驗啊。漫不經心的開始想著別的事情，甚至把雙腿曲起，讓對方能更方便擴張。
+
+「哼……」直到第二根的手指深入後才隱隱發出哼吟，順著抽動的行動調整呼吸，許久未有行為的身體過了一段時間才逐漸放鬆下來，狹小的空間能夠清楚聽見來自對方的呼吸聲和自己的心跳聲。
+僅僅只是聽著、體溫也逐漸升高。
+
+「快點……」對於緩慢的速度忍不住的催促了對方，才剛出聲臉頰感覺燒起來一樣，本該是對這樣的事情感到習慣的，又是因為什麼……才會有這種複雜的感情。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:56 AM</span>
+
+            <div class="chatlog__message " data-message-id="958424325327847464" id="message-958424325327847464" title="Message sent: 30-Mar-22 01:56 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">順著對方的話慢慢加快了手上的動作，同時也試圖擠進第三根手指，看見對方同樣泛紅的臉，不由自主的勾起唇角，隨後低下頭去親吻他的眼角。
+深知彼此之間的關係做不到調情，於是又刻意在對方耳邊低聲呼喚他的名字。
+為什麼會露出這種表情呢？
+
+在感覺手指已經差不多後才連帶液體從對方體內抽出，第一次看見誰的穴口因為自己的動作被迫張開還是感到奇妙，可下身的脹痛容不得自己猶豫，以前段抵住入口，在確定推入的同時不會給他帶來太大的負擔時才一挺腰將全數沒入對方裡面。
+
+「明智……」擔心對方有哪裡不適，就算交合處帶來的刺激和快感無一催促著自己將無處宣洩的慾望投注在這人身體上，手還是小心的撫上他的側臉，就算真的疼到張口咬住自己也無所謂。
+
+只要能讓你舒服一些，就沒有關係。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:56 AM</span>
+
+            <div class="chatlog__message " data-message-id="958424459289722900" id="message-958424459289722900" title="Message sent: 30-Mar-22 01:56 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">反手抓著枕邊、一手攥緊了襯衣，思緒也逐漸的沒法再往其他的方面去想。
+對蓮不經意的笑容定住了目光，落下的溫柔令人不知如何去接住，是自己能夠獲得的嗎？但與和那些大人們不同，自他給予的親吻並不讓人感到排斥。
+這時才徹底明白－－眼前的人與那些人渣沒有一丁點的相似，這本就是不能相比的事情。
+被沙啞的聲音呼喚了名字，明明只是名字而已，耳根卻出賣了主人此刻的現狀。
+
+在真正的交合以前莫名的有那麼一絲的緊張，不知視線究竟該放在哪，不論是看著人的臉還是挺入的地方都感覺不對勁，索性飄向一旁甚至一度想閉上眼……但就在全數沒入的那刻，異樣以及從未有過的滿足感湧上心頭，以至於讓變了調的呻吟自口傳出。
+
+「我、……」對於因此產生出的徬徨在他的撫摸下消去了大半，一手按住了其手背，肆無忌憚的將臉頰蹭入掌心之中。
+
+不疼、一點都不，不論是身體還是心理都沒有感到不適，這太奇怪了，由於從未得到過，因此無法肯定的將其歸類在「幸福」。
+莫名的有點想哭，但現在也只想什麼都不想的沉溺其中。
+
+「……繼續，」細長的雙腿抬起並纏上了腰間，因動到了姿勢又倒吸了氣，隨後含糊的開口。「我沒有這麼脆弱，就照你想……怎麼對我都行。」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:58 AM</span>
+
+            <div class="chatlog__message " data-message-id="958424807668584468" id="message-958424807668584468" title="Message sent: 30-Mar-22 01:58 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「……嗯。」
+在被對方以雙腿勾住時，下身不可避免的又深入了些，將他主動貼上掌心的動作視作對一切的默許，早已按耐不住的情慾像是本能的催化劑，身體遵循人類最初的慾望開始挺動腰肢，未知的快感沿著所有神經直襲大腦，喘息難以自制的流淌而出。
+
+這個人的身體足夠堅強，同時也脆弱的像隻蝴蝶；他沒有自己說的那般耐不可摧，僅僅只是他對於疼痛感到麻木。將吻慢慢從眼角處向下至唇邊，沒有打算做出戀人一般的舉止，唇瓣很快掃過對方的，隨後便再次咬上他的側頸。
+自己渴求這個人的一切，這必定不是被他人所操弄。
+
+習慣了對方的身體後才慢慢加快速度，手順勢撫上他的後腦，柔軟的髮絲從指間落下，讓人想起那個雪夜。
+「——我想要你。」
+
+想要這個人的——想要明智吾郎的一切。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:58 AM</span>
+
+            <div class="chatlog__message " data-message-id="958424909514698812" id="message-958424909514698812" title="Message sent: 30-Mar-22 01:58 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">略顯急促的呼吸和高聲的呻吟伴隨著抽動發出，身體早知道該如何去收放的令人更加興奮。沒有特別的技巧、沒有似於情人的話語，有的是順從渴望的承受和迎合，以及若有若無、仍壓於心頭的陰暗。
+
+眼角、臉龐、唇邊，最後是最為脆弱的頸脖，像是珍重的親吻轉為侵略性的啃咬－－厚重且鏽蝕的鐵牆將所有人阻隔於外，除了是斷絕，也是不願讓他人看見自己柔軟且懦弱的一處。
+
+但要是－－要是那門重啟了，Joker，你會怎麼做？
+
+伸出手擁抱著身上人的身軀，這份溫暖是僅有此時才能夠的接觸嗎？眼眶突然感到一股溫熱，心口也悶的讓人感覺到缺氧般窒息。
+溫柔的手掌、交疊的身軀、無比親暱的舉動……
+以及那句「我想要你」。
+
+不明白，全然不明白，感受到的陌生感情讓人感到恐懼。呻吟中漸漸的參雜嗚咽的哭泣，溫熱自眼角流下，擁抱的力道絲毫未減。
+
+從未獲得過的感覺，好恐怖……但不想放手啊。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 01:59 AM</span>
+
+            <div class="chatlog__message " data-message-id="958425181657899069" id="message-958425181657899069" title="Message sent: 30-Mar-22 01:59 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">任著對方抬手擁抱自己，幾乎是對於身下人此時此刻透露出的、陌生的態度感到心軟，最後還是在見血的傷口處落下一吻，隨後把腦袋埋在他的肩上，一邊無意識的喊著對方，身下的動作也絲毫未減。
+喜歡、愛——遠超出於此的感情，是什麼扭曲了這一切。
+
+直到溫熱的液體沾染到自己臉上，隨即而來的啜泣聲頓時讓大腦敲響警鈴，趕緊撐起身確認對方是不是被自己弄傷，在看見這個人流淚的模樣時還是感覺心臟像是被緊握一般難受。
+
+雖然的確說過沒見過他哭泣，可這話並沒有自己想看的含義存在，以至於真的面對這副情況一瞬間就慌了手腳，只能暫時停下所有動作，小心的替他抹掉淚水，接著把他整個人撈起來抱在懷裡順著他的背。
+「有哪裡疼嗎……？」
+
+實話來說還是不想看見他哭的，無奈自己並不擅長安慰他人，在周遭有人煩惱時唯有聆聽。可這人不是會主動坦言的類型，只得像哄小孩一樣輕拍著他。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:00 AM</span>
+
+            <div class="chatlog__message " data-message-id="958425354333192202" id="message-958425354333192202" title="Message sent: 30-Mar-22 02:00 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">你在慌什麼啊，你不是沒見過嗎，這不就讓你看了……即使對雨宮蓮這樣慌了手腳的滑稽和慌張的模樣弄得想要嘲笑對方，但仍控制不住眼淚的流下，甚至想說的話語堵在喉間無法說出。
+
+好蠢，還以為經過這麼久真的忘了該如何悲傷，在被抱起時甚至發出了連自己都想像不到的哭吟，這傢伙真的沒想過這樣姿勢會進到更深嗎？開始胡思亂想著亂七八糟的事情，但想要迴避的情感卻仍塞在腦海中無法揮散。
+
+「……不痛。」鼻音仍重，對這樣的姿勢感到些許的不自在而動了幾下，雙手依舊抱著眼前的這一溫暖，並把腦袋靠在了雨宮蓮的肩上，埋頭嗅聞著來自他身上的味道。
+
+「……沒人這樣對待過我。」輕聲呢喃著，也不是要這人有所回應，只是想說罷了，就像以前那樣。「我不習慣……」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:01 AM</span>
+
+            <div class="chatlog__message " data-message-id="958425807016034376" id="message-958425807016034376" title="Message sent: 30-Mar-22 02:01 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「嗯……」得到對方的回答才鬆了口氣，低低應了一聲表示自己有聽見，手沒有鬆開他的意思，反而在察覺這人似乎在對姿勢感到不滿意時又收緊了力道。
+
+姑且還是明白這個人沒有被溫柔對待過，只是也未曾預料到這樣的舉動會給他帶來如此劇烈的反應，只能一面安撫著他一面思考如何應對。
+未來是充滿不確定性的，即便自己再怎麼想向對方保證以後也會如此對待他，可要考慮的不僅有自身狀況，還有他周遭的問題，以及「其他人」的看法。
+春和雙葉或許尤其棘手。
+
+保持著這樣的姿勢不發一語，只有在對方輕哼時會呼喊他的名字。只是想證明他不是一個人，現在不是，以後也不願再鬆手並且目送你的死亡。
+
+「我不想……變得跟其他人一樣。」只是稍微在腦內想像這個人過去會是被如何對待就感覺一陣噁心，聲音染上一份暗沉，心臟仍在隱隱作痛，「不想讓你難受，你已經不用再去勉強自己了。」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:02 AM</span>
+
+            <div class="chatlog__message " data-message-id="958425924548833330" id="message-958425924548833330" title="Message sent: 30-Mar-22 02:02 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「你當然不會。」不會和我們這種人同流合污。知道這種話一旦說出口又會激起對方的情緒，哼哼了幾聲、張嘴也咬了肩頸一口，反正是他要抱著的，那乾脆就更放肆一些吧。
+
+不用勉強自己……說是這麼說，但日後究竟該如何繼續在已經沒了目標的世界活下去？過去讓人唾棄、未來不受待見，啊，其實也是自食惡果，但生存的慾望確實已經要消失殆盡，甚至為什麼會待在這裡……
+
+心煩意亂的、本不該在這種時候延伸出其他的思想，哭紅的眼對上了耀黑的眸。
+
+為何對曾想殺了你的我如此？
+張開了口－－也未能將想要詢問的道出。
+
+「……再一次就好。」雙手捧起了對方的臉龐，並輕輕的抵住了額間。
+「說你想要我－－然後要我。」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:04 AM</span>
+
+            <div class="chatlog__message " data-message-id="958426540847292416" id="message-958426540847292416" title="Message sent: 30-Mar-22 02:04 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">被對方張口咬下的瞬間還是因為吃痛發出悶哼，不過比起他過去疊加起來的疼痛倒也不算什麼，想到這裡，異樣的不適感再次蔓延全身，手只能死死抱住懷裡人。
+
+同樣貪婪的奪取對方的溫度和一切，唯有如此才能感受到彼此都還活在這個世界上。一個人很孤單吧，在你說出「如果能早點相遇」的那時就該察覺到了，微弱的求救最終還是被扭曲的恨意蠶食鯨吞，向你伸出的手被毫不猶豫甩開。
+至少這一次——這一次不會再放開。
+
+回神的同時正好對上黯淡的目光，長期被手套包覆住的雙手是冰冷的，讓人不由自主想為他帶來一些溫暖。
+「……不管多少次都可以。」伸手抓住了他的左手，以掌心包裹起那份冰冷，隨後抬手在他的手腕處留下一吻，直視他的眼眸隨之瞇起，「我想要你，明智。給我吧？」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:06 AM</span>
+
+            <div class="chatlog__message " data-message-id="958426919836192768" id="message-958426919836192768" title="Message sent: 30-Mar-22 02:06 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">像是溺水的人獲取了能夠苟喘空氣的浮木，被緊擁的冰涼身子被溫暖的溫度環擁著，於現在的自己來說－－是來遲了嗎？
+
+曾渴求、希望、祈求，卻無人能夠給與，已經不在乎了、已經可有可無了的現在卻只要伸手便得以擁有？
+總是充滿自信和沉穩的眼眸是如此美麗，映照出的倒影卻腐敗不堪……
+
+若真的能從這裡離開的話－－
+
+將臉龐湊近，沒有吻於唇瓣，薄唇親向了眼簾、爾後是帶有強勢性意味的再度將其壓於身下，不輕不重的在喉結處吮出了紅痕，熱息呼在了肩窩處。
+
+「一次就夠了。」雖不多，也許不足以填補過往的許多遺憾，但也夠了。
+我本就沒有資格自你那獲取任何一切。
+
+短暫的趴伏著，闔上雙眼，將多餘的情緒盡數收起，再次起身時，酒紅色的眼裡多了狡黠。
+
+「那你……仔細看著。」重新奪過了主導權，雙手撐於身後，大張的雙腿將交合的私處暴於他人眼前，緩緩的抬起了腰再自行坐至最深處，明白何處能使自己更加舒服、也懂的該如何去討好一方的主人。
+
+變得散亂的髮絲貼在有了些許薄汗的頸邊，眼角的泛紅、情動的呻吟、因挺入深處而抽搐的甬道無不顯示著身上人正投入其中。
+
+「蓮、蓮……」也唯有此刻，帶著一絲不明顯的依賴去呼喚著名字。</span>
+
+                                <span class="chatlog__edited-timestamp" title="30-Mar-22 02:19 AM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:07 AM</span>
+
+            <div class="chatlog__message " data-message-id="958427217099100231" id="message-958427217099100231" title="Message sent: 30-Mar-22 02:07 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">順從的被壓在人身下，在這人行動且開口時只是短嘆一聲，隨後不再多言，而是順著對方的背脊直到他起身。
+直視著那雙和過往全然不同、被太多情緒染上色彩的眼眸，對他所說的只需回以接受的笑。
+
+視線自然因為對方的動作而向下看去，真正看見人交媾的畫面還是讓頭腦一時失了思緒，在捕捉到那人身體的顫抖時才伸手扶住了他的腰。
+真的是，熟練的不行。
+
+下身在對方的動作和呼喊，以及視覺上帶來的衝擊下又感覺脹大了些，手指掐了掐他的腰側，在他坐下的同時也挺腰捅入更深處的地方。
+「明智……」啞著嗓音同樣低聲喊著對方的名字，像是為了抓到什麼——像是為了確認對方的存在。
+
+手很快的就離開了他的腰部，沿著腹部慢慢撫去，最終握住了他同樣起了反應的性器開始撫弄起來。
+拇指指腹在頂端搓揉，掌心包覆住整個柱身，自己畢竟還是高中生，這種事情多少做過幾次，只是在挑逗他人的方面上可謂毫無經驗，只能一邊愛撫著對方一邊試圖從他的眼神中看出端倪。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:09 AM</span>
+
+            <div class="chatlog__message " data-message-id="958427697313370204" id="message-958427697313370204" title="Message sent: 30-Mar-22 02:09 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">一下、兩下……在行動時的來回抽動而產生的快意使得理性正緩緩失去，交合時肉體的撞擊聲以及對方的喘息便是鼓勵的動力－－忍不住的產生了惡劣的獨佔想法。
+但那又如何？他的身旁並不缺少什麼，甚至更顯得自己是多餘的。
+不過至少，現在的此時此刻……雨宮蓮的時間只屬於明智吾郎。
+
+「－－？！」思緒在插入更深處的那一刻瞬間停擺，本還在低吟呼喚的聲音像是被掐住脖子的轉為氣音，雙眸瞪大著卻沒有焦距在任何一方，過於深入的衝擊在數秒後才勉強消退，粗喘著氣息、顫抖的再度抬起腰繼續做了下去。
+
+「不行、啊啊……不可以……嗚啊、呃！」是舒服的、愉悅的，甚至這是所有以來第一次感到心甘情願，聲音膩的像是吃了鬆餅上的楓糖令自己覺得死甜，替人套弄愛撫著性器也是不停的搖頭，吐出的違心話語破碎的伴雜受到刺激的尖叫，一手捂住了腹部，動作變得忽慢忽快，甚至感覺雙腿要沒了力氣繼續支撐。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:11 AM</span>
+
+            <div class="chatlog__message " data-message-id="958428190911631420" id="message-958428190911631420" title="Message sent: 30-Mar-22 02:11 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「不行？」觀察著身上人的一舉一動以及所有細微的反應，明白對方估計是要受不了了，自己卻並不打算停下，反而加快手上套弄的速度，在找到對方最為無力的同時使力將他再次壓在身下。
+頭或許磕到床了，可現在顧不上這麼多，只能安撫性的低下頭親吻他的眼角，隨後起身抓住他的雙腿，朝著裡頭胡亂的撞擊。
+
+說學習不到技巧是假的，可在跟這個人的性愛中，所有技術在他面前都是班門弄斧，即便自己不想承認也不想面對。野獸一樣的本能行動才是適合這場毫無徵兆性的交媾，從上至下打量著他的身體，蒼白中泛著紅，更顯脆弱。
+
+「撐好。」
+難以在這種情況下多言提醒對方，只是在進行下一步行動前低聲說道，接著慢慢將自己抽出他的體內，抬手把軟的像是失去骨頭的人翻了個身讓他伏趴在床上，憑著殘存的理智還是伸手把枕頭也拿來讓他墊著，不等他給出反應就先行又一次貫穿他的身體，並且因為姿勢的關係更加方便自己進入，手環住他的腰避免人無力倒下，傾身腦袋正好能靠著他的肩窩，於是有些惡意的在他耳邊笑著開口：「明智……舒服嗎？」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:13 AM</span>
+
+            <div class="chatlog__message " data-message-id="958428634165678180" id="message-958428634165678180" title="Message sent: 30-Mar-22 02:13 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">視角再度相互對換，自頭傳來的些許疼痛未能夠讓理智回歸，反而昏沉的癱軟在床舖上難以動彈，抬起的手也似是被抽掉了力量一樣無力。
+「等、等等，蓮……啊－－……」剛要說出口的話被毫無章法的頂撞給壓了回去，褐棕色的腦袋左右晃著，卻也沒辦法在這之中擠出詞彙，只得被動的承受不間斷的刺激。
+
+帶著水霧的眼眸失焦的盯著身上人的臉龐，於此時的歡愛下忘卻了許多沉重的東西。復仇、殺戮、孤寂、失去的生存意義……或許這正是先前主動的原因－－還有細微到不想去碰觸、以及承認的感情。
+
+「欸……？」沙啞的嗓音流露出了疑惑，潛意識的想要挽留抽離的性器卻也無果，爾後不明所以的被翻身而過，在發愣了幾秒、直到猛然的再度插入深處時大腦才反應過來，身體早已為此有了反應。
+支撐下半身抬起的雙腿顫抖的厲害，不難想像若是沒了助力的結果為何，高亢呻吟後傳來的是急促的低喘和嗚咽，他試著施力動了動腰，被熱氣和戲弄的話語所影響，耳根紅的不像話。
+「太、深……肚子很脹……」是自尊心作祟抑或是不想輕易認輸，雙手緊抓著枕頭的一角，沒有正面回答他的問題。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:14 AM</span>
+
+            <div class="chatlog__message " data-message-id="958429073460330557" id="message-958429073460330557" title="Message sent: 30-Mar-22 02:14 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「……哼。」對於他回避掉的問題只是哼笑一聲，稍微放緩了身下的動作轉而用手去按壓他的腹部，在他肩頭輕輕蹭了蹭後才壓低聲音說道：「這裡，不舒服？」
+
+沒有打算等他回答，逕自丟出新的問題後就放開了他的腰並伸手遮住了他的雙眼迫使他仰頭，同時也在耳垂上咬了一下。
+這個人，耳朵是弱點。
+
+在注意到這點後，連自己也下意識愣了愣，像是沒有想過自己也會有握住他人弱點的一天。這麼做過於卑鄙，縱使自己總和身邊的人進行一定程度的「交易」，單方面脅迫這種事除了和陰影對談時會出現以外再也沒有其他。
+猶豫了一會兒，還是決定將目標移至其他地方，側頸、箭頭、背脊……幾乎肉眼可見的地方都佈滿了深淺不一的痕跡，但是還不夠。
+還想要，想要這個人徹底的屬於自己。
+
+重新加快了速度，手掌捂的嚴實，為的是剝奪這個人的一切視線。人類在看不見的情況下會放大其他感官，而自己先前才經歷過這種情況，因此刻意的在已經停止流血的傷口處啃咬著，嚐到已經習慣的血腥味後才扭過他的頭在他唇角留下味道，「明智，想要我怎麼做？」
+
+想要我離開，還是想做到底。
+<span class="spoiler-text spoiler-text--hidden" onclick="showSpoiler(event, this)">你已經有要求的權利了。</span></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:17 AM</span>
+
+            <div class="chatlog__message " data-message-id="958429698566783076" id="message-958429698566783076" title="Message sent: 30-Mar-22 02:17 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">舒服？不舒服？問到這個問題時甚至無法思考該如何用口述去表達，壓著腹部的舉動略癢、以及擁有了意想不到的害臊。
+要是此時是清醒的話肯定會笑話－－更多的是氣惱自己混亂且不該有的情緒。
+
+想要搖頭或是點頭前就被控制住行動，眼前一片的漆黑令一切感官變得更加敏銳，黑暗使得那壓下的記憶逐漸回籠。
+「咿、……啊！」呼吸變得稍顯急促，直至耳垂傳來的刺激和幾日以來熟悉的氣味包裹著自己，緊繃的精神才鬆懈下來，身體也老實的反應出對此的顫抖。
+
+沒有對細膩的親吻和吸吮的舉動出聲制止，不如說根本見不到身後的傢伙究竟在做些什麼事情，充斥情慾並昏頭的腦袋也只剩下了雨宮蓮這個人而無暇顧及其他。
+
+「我、啊！哈啊……嗚呃、」半趴而抬起的下身幾乎要承受不住過速的撞擊，無法徹底閉合的唇角流下吞嚥不下唾液，一次次的深入換來一聲聲的吟叫，其中也參雜著啃咬傷口時發出的吃痛聲。
+
+好舒服，要壞掉了、再繼續下去就要壞掉了－－
+
+對上視線的迷離雙瞳缺少了往日的算計和狡詐，嘴角沾上了屬於自己的鐵繡味，那句簡單的問題傳入耳中，無數的回答湧上了喉間。「給我……蓮……抱我、」
+
+<span class="spoiler-text spoiler-text--hidden" onclick="showSpoiler(event, this)">然後愛我。</span>
+無聲的道出了一生最為希望的，也是認為最為無望的渴求。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:20 AM</span>
+
+            <div class="chatlog__message " data-message-id="958430575218290708" id="message-958430575218290708" title="Message sent: 30-Mar-22 02:20 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">對他的回答感到數分訝異，更多的是湧上心頭的苦澀，他希望的不過如此，為了本應得到的東西，他甘願扭曲這一切。
+手按上他的後腦強迫和自己以額相抵，能從對方失焦的眼中看見自己的倒影，不同於被同伴視作隊長的存在，此時此刻在這裡的，不過是沉溺於慾望之中的一介凡人罷了。
+「我會給你，你想要的……」所以哪裡也不要去了。
+
+最後還是選擇吻上他的唇。情理之中沒有任何甜味，只有淡的像是隨時都要嚐不到的血腥味，很難說自己是否懷念這種味道，只是在唇瓣相貼的同時不甘止於此，往對方深處進行最後的衝刺時也咬破了他的嘴唇。
+好苦。
+
+手再次環抱住他的腰，悶哼了聲很快就感覺到頭腦一片空白，在對方體內釋放的快感讓自己一時緩不過氣，也不打算就此放開他，乾脆就著這樣的姿勢側倒在床上，小心的親吻他的頭頂。
+估計會生氣好一陣子吧。一邊想著無關緊要的事情，手又收緊了擁抱的力道。
+
+「就算你被世界遺忘，我也會永遠記得你。」像是說給對方聽，又像是自言自語，就連自己也不清楚這番話最後會被對方扭曲成什麼意思。
+純粹的愛意自始至終無法詮釋這份關係，但是無論是多麼扭曲的情感，世人也將其稱之為「愛」。
+
+<span class="spoiler-text spoiler-text--hidden" onclick="showSpoiler(event, this)">「我愛你。」</span>
+<span class="spoiler-text spoiler-text--hidden" onclick="showSpoiler(event, this)">即便我並不清楚這是否是你所渴求的事物。</span></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:21 AM</span>
+
+            <div class="chatlog__message " data-message-id="958430828508098632" id="message-958430828508098632" title="Message sent: 30-Mar-22 02:21 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">明智吾郎曾經想要的真的很簡單。
+
+不明白普通的家庭是如何組成的，不管嚴厲的溫柔的是父親還是母親，即使不是大眾的那般的組成也能夠接受……
+來自家庭的溫暖究竟是怎麼樣的感覺？被人愛著的感覺又是如何？
+在世俗的泥濘裡被踐踏的孩子從未得到過。
+
+印上唇瓣的柔軟讓人產生了短暫的迷茫，不、這不應該……卻不知道是無力再去推開對方，還是打從心底的渴求、貪婪的想要更多一些。
+
+蓮，你會給與我嗎？
+在一切都來不及的時候，還能夠付出嗎？
+
+好看的唇型上多了泛血的傷口，痛的擰起了眉頭，自身下來的猛烈深入和撞擊而來的快意再度理性和感性攪和在一起，混亂且含糊的嗚咽哭泣，眼前閃過了幾幕白光，劇烈顫抖的身體不難感受出此時的狀況，渾身癱軟的倒在了床舖上喘息著。
+
+在高潮之前究竟都說了些什麼？是求著慢一些嗎？還是尖叫著說要去了呢，唯獨記得的是……少許的含帶脆弱的、喊著雨宮蓮的名字。
+
+背對著溫暖的人，事後的餘韻仍然讓身體抖了抖，老實說並不是很想開口說話，也沒對緊擁著自己的手臂有什麼反抗的意味，閉上雙眼，也聽見了自後方而來的話語。
+
+「……被世界遺忘也沒什麼不好的。」低聲呢喃著，他嘆了口氣。
+
+「值得嗎？像我這種人。」即使你真的願意愛我。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:23 AM</span>
+
+            <div class="chatlog__message " data-message-id="958431257560227870" id="message-958431257560227870" title="Message sent: 30-Mar-22 02:23 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「一點也不好。」聽見對方低語的當下出聲反駁，同時也想起年末時發生的事情，那股絕望似乎至今仍尚未徹底抹滅——是無法遺忘的吧，被世人忘卻的感覺。手因此失了力道，只能無力的環住對方。
+一點也不好，認知被消除的感覺。
+
+第一次的性愛帶來的消耗遠比預想，也或許是因為場地、因為對象，或是其他因素，總而言之即便想和這個人再爭論幾句，頭腦也無法清晰思考，更遑論應付他刁鑽的問題。
+值得嗎？像是將人劃分等級的說法讓人不悅，值得與否並不適用於感情。
+
+「明智覺得自己是哪種人？」撐著意識還是針對他最後的話語進行反問，世界上真的存在沒有資格被愛的人嗎？自己倒也不是什麼博愛聖人，對於曾經想要殺了自己的這個人也有過憎恨——但更多的是還是悲傷。
+「我覺得明智很聰明，是很重要的對手。」
+
+「沒有什麼不值得的。」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:23 AM</span>
+
+            <div class="chatlog__message " data-message-id="958431298366619709" id="message-958431298366619709" title="Message sent: 30-Mar-22 02:23 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「－－……」原本還打算開口說些什麼，但在聽見了對方反駁的詞句中包含的情感，到嘴而尖銳的話還沒反應過來便嚥了回肚子裡。
+「獲得了什麼的人就會開始害怕失去它，」手心覆上了擁著自己的手背，平淡的語氣中帶著些許的疲倦－－那是來自於短卻又漫長的十幾年來所累積的。
+金錢、名聲、人際……當時握有一切，而此時卻不再認為那是有所必要。
+「是否存在於世上，又或是誰的記憶裡……對我來說已經沒有意義了。」
+
+沒有回答對方之後的問題……又或是早已回答，稍微轉頭的看著身後的人，瞇起了眼。
+
+「睡一會吧，下一次治療後就結束了。」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:24 AM</span>
+
+            <div class="chatlog__message " data-message-id="958431511386914877" id="message-958431511386914877" title="Message sent: 30-Mar-22 02:24 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">自己終究無法完全站在他的角度去思考一切。其實早就意識到這點了，只是一直不願去承認，正視這件事實就像和他之間的距離又會更加遙遠——實際上或許根本沒有靠近過吧。
+不甘心。無意識的咬住下唇，把頭輕輕靠在對方肩上，短時間內佔據自己大腦的、這個人的味道讓一切沉澱下來，雙眼慢慢閉起，但在得到自己想要的回答前並不打算入睡。
+
+「就算對你來說沒有意義，我也會記得你。」更何況約定還未完成，你我的勝負尚未分明。
+
+「答應我，哪裡也不要去。」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:25 AM</span>
+
+            <div class="chatlog__message " data-message-id="958431692996112486" id="message-958431692996112486" title="Message sent: 30-Mar-22 02:25 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">清楚明白對方不過是在硬撐著意識而不願沉入睡眠，而目的卻是想從自己這聽見一句應和的回答，心情略為複雜的嘆了口氣。
+
+天曉得我是多麼的希望你在今日後從此忘了我，我們本該在那之後形同陌路，更甚至是不該再次相見。
+
+明智吾郎該是雨宮蓮生命中僅存六個月的過客。
+
+「睡吧。」遲疑了幾秒，伸手輕揉了那頭捲翹的黑髮，從沒這麼做過而顯得生疏。
+
+「你醒來的時候……我還會在。」
+
+惡劣的神明啊－－祢究竟在打著什麼樣的棋局呢。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 02:25 AM</span>
+
+            <div class="chatlog__message " data-message-id="958431758901182474" id="message-958431758901182474" title="Message sent: 30-Mar-22 02:25 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">在獲得了明智的回答後，禁不住濃濃的睏意，你慢慢闔上眼，墜入夢鄉。
+
+<em>「啊……還沒注意到啊。」
+
+「是因為本該死去的人出現在面前，所以忽略了很多事情嗎？」</em>
+
+自黑暗的哪處傳來了一抹女孩的嗓音，她咯咯笑著，像是在逗著人玩。
+
+<em>「作為讓我看了一場有趣的畫面，就讓你問問事情當獎勵吧？」</em></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:27 AM</span>
+
+            <div class="chatlog__message " data-message-id="958432106114084974" id="message-958432106114084974" title="Message sent: 30-Mar-22 02:27 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">所見之處是一片黑暗，本抱在懷裡的人不見蹤影，身體有些沉重，意識卻十分清醒，但這裡並不是天鵝絨房間。
+
+能夠聽見女孩的聲音，不是熟悉的那般溫和有禮，更像是天真無邪的中帶有一絲狡黠。
+是沒有印象的人。
+
+自知是在夢中，對於人消失一事暫時壓下不悅感，聽著她的話音落下很快就出聲提問：「你是誰？」
+你就是一切的始作俑者嗎。
+
+<span class="spoiler-text spoiler-text--hidden" onclick="showSpoiler(event, this)">深藏的記憶再次從角落中翻出，「神明」自負的笑聲引人發笑。</span></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 02:27 AM</span>
+
+            <div class="chatlog__message " data-message-id="958432165559959632" id="message-958432165559959632" title="Message sent: 30-Mar-22 02:27 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>「欸，問我是誰嗎？認真的？」</em>
+
+聲音裡多參雜了些許的訝異，哼哼了幾聲，之後才回答了你的問題。
+
+<em>「要說的話……叫我莉莉絲吧？我還挺喜歡這個名字的。」
+
+「沒想到當時還像野獸一樣的傢伙其實還是能好好講話嘛。」</em></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:27 AM</span>
+
+            <div class="chatlog__message " data-message-id="958432336276516935" id="message-958432336276516935" title="Message sent: 30-Mar-22 02:27 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「……莉莉絲？」腦中浮現出的是自己持有的其中一個Persona ，可對方並不是女孩，也不是這種性格，而在神話之中也並非只有一名「莉莉絲」。
+不是亞當的妻子，而是風暴惡魔嗎？
+
+正在試圖釐清思緒的同時聽見來自那人的揶揄，無奈的扯了下嘴角，「那不是出於我的本意。」
+
+卻也不能否認自己的感情因此一發不可收拾。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 02:29 AM</span>
+
+            <div class="chatlog__message " data-message-id="958432608793002055" id="message-958432608793002055" title="Message sent: 30-Mar-22 02:29 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>「當然知道啦，人家剛好路過還親眼見證呢，你跟那人不過是被捲入另一場神明的遊戲，還順帶附贈了後遺症而已。」</em>
+
+她用了種看好戲的語氣回話，姑且上還能算沒有惡意……？
+
+<em>「雖然不是你的本意，但還是暫且把你們倆關在這三天治療啦，失去理智的你會做出什麼事情，自己心裡還是有點數吧？」</em></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:30 AM</span>
+
+            <div class="chatlog__message " data-message-id="958432961777266768" id="message-958432961777266768" title="Message sent: 30-Mar-22 02:30 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「後遺症是什麼意思？」
+神明、遊戲、後遺症……前面兩個詞還在能夠理解的範疇之內，本來和明智的相遇也可以說是在「神明」的算計下才發展於此，可後遺症指的是什麼？自己、或是他會出現什麼不可逆的情況。
+
+無視了他後面的一句話——其實自己比誰都要明白內心深處扭曲的慾望，只是這個時候不是談論這種話題的時機——在整理這一切變異時不忘又扔出一個問題：「你剛才說的，這個遊戲的發起者是誰？」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 02:30 AM</span>
+
+            <div class="chatlog__message " data-message-id="958433059269656596" id="message-958433059269656596" title="Message sent: 30-Mar-22 02:30 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>「後遺症是甚麼意思……就是字面上意思啊，因為某些原因造成了不可逆的症狀，這不是人類本來就該知道的事情嗎？只是這一次、又或是因為這種情況下的更為神奇一點。」
+
+「不過也可以告訴你一個好消息，你的後遺症－－<u>衝動</u>會自然消失，不必你特地做什麼事情。
+
+你通過啃咬去抑制以及滿足你的渴望，在你做這件事情時是可以明顯的感受到的吧。」</em>
+
+在你問到始作俑者時，對方的聲音一頓，嘿了一聲。
+
+<em>「嗯－－……說了也不曉得你有沒有聽說過呢？」
+
+「<u>伏行之混沌，奈亞拉托提普</u>。」</em></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:32 AM</span>
+
+            <div class="chatlog__message " data-message-id="958433590985777182" id="message-958433590985777182" title="Message sent: 30-Mar-22 02:32 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">低下頭去消化得到的情報，同意了他所說的內容，可清楚自己的狀況卻對那人身上的變化一無所之，著實令人心煩意亂。
+
+本想針對後遺症的問題更加深入，抬頭準備開口時卻被對方指出的名字嚇了一跳。
+奈亞拉托提普，一個過去曾在書上看見的名字，難以理解為何會在這種地方聽見這個名字，很快的又搖頭甩開這樣無謂的疑問。
+異世界的說法足以帶來一切可能性，更何況小說中的人物具現化並不是沒有見過。
+
+「為什麼選擇我們？」從書裡的內容看來，出於玩心的可能性極高，不過猜測無法作為定案的線索，只能先試圖從自稱莉莉絲的人口中問出情報。
+
+就算人不在天鵝絨房間，要做的事情似乎也沒有什麼變化。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 02:34 AM</span>
+
+            <div class="chatlog__message " data-message-id="958434034499850301" id="message-958434034499850301" title="Message sent: 30-Mar-22 02:34 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>「我不知道，我又不是祂，不過看你的樣子似乎是知道祂的，個性就那樣嘛。」</em>
+
+女孩又笑了起來，對你的興致似乎大了點。
+
+<em>「大概只是找樂子玩而已，目前來看應該是放過你們了，不過天曉得哪天又回頭呢。」
+
+「好－－時間到，問題到此為止！現在我們拉回你的問題上：你的症狀會在第四天的白日時解除，但在這之前的時間中，你的慾望會是最高漲的時候。」
+
+「你能抵擋住你的慾望到明天嗎？我很期待看見你的結局。」</em>
+
+女孩的聲音遠去，再一次的眨眼後，場景回到了那陌生的房間。
+
+抱在懷裡的人安安分分的，他同樣闔著雙眸，估計是在淺眠休息來恢復體力。
+
+剛剛那些是夢還是現實？</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:35 AM</span>
+
+            <div class="chatlog__message " data-message-id="958434216104853554" id="message-958434216104853554" title="Message sent: 30-Mar-22 02:35 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">察覺到身後的人有了不同於沉睡的反應後便醒了過來，身體稍微動了動，哼了聲後開口詢問。
+
+「醒了？」明智低聲咕噥著，感覺很不習慣一直被這麼抱著。
+
+「差不多也是最後一次治療了。」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/735505070195736587/12c95f0ef5e5d154063da4892e230e90.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="夜玥#9054" data-user-id="735505070195736587" style="color: rgb(147,0,0)">夜玥</span>
+
+
+        <span class="chatlog__timestamp">30-Mar-22 02:36 AM</span>
+
+            <div class="chatlog__message " data-message-id="958434462528573450" id="message-958434462528573450" title="Message sent: 30-Mar-22 02:36 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">cc 60</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:36 AM</span>
+
+            <div class="chatlog__message " data-message-id="958434463577149480" id="message-958434463577149480" title="Message sent: 30-Mar-22 02:36 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="夜玥#9054">@夜玥</span> 
+1D100 ≦ 60：
+66 → 失敗</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:38 AM</span>
+
+            <div class="chatlog__message " data-message-id="958434962493821000" id="message-958434962493821000" title="Message sent: 30-Mar-22 02:38 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">意識從遙遠的彼端回到現實，身體上多少有得到一定程度的休息，方才洶湧的慾望緩下不少，眨了眨眼確定眼前的人是真物，下意識伸手捏了他的臉頰，放鬆下來後才注意到兩人的下身還是交合的狀態，很快的認知到自己如果不做些什麼或許會出於私慾被殺掉，於是趕緊退出他的體內並把人打橫抱帶去浴室。
+「……抱歉。」
+
+在等待浴缸放滿水的時間中給對方的身體簡單清洗一次，雖說並不是第一次就近見過他的身體，像這樣觸碰還是有些讓人不習慣，試圖注視著地上的水流稍微分散注意力，一邊提起剛才看見的奇妙夢境：「我剛才做夢了。」
+
+「夢中的人告訴我，這是被稱作神明的存在舉辦的遊戲。」憶起偽神帶來的「遊戲」不免皺了皺眉，稍稍抬眸看向他身上的痕跡，隨後才繼續說道：「我覺得應該要告訴你這件事。」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Mar-22 02:38 AM</span>
+
+            <div class="chatlog__message " data-message-id="958435005556744192" id="message-958435005556744192" title="Message sent: 30-Mar-22 02:38 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">面無表情的任由人揉捏自己的臉龐，在剛清醒的放鬆情況下並不是很想再說些什麼話來去阻止對方的行動，但也不妨礙想要把他的手打爛的想法。
+「算你識相。」沒有催促和再提醒記得治療的事情，身體被抱起騰空的一瞬有那麼點不自在，尤其是下身流出了什麼的感覺更加微妙，以至於沒有拒絕對方的行動。
+
+黏膩的身軀被淨水沖洗至乾淨，熱水碰到傷口時還是痛的皺了一下眉頭，也沒有喊疼，只是靜靜的聽著來自他人的解釋，然而沒有露出太多驚訝的神情，平淡的接受了這樣的事。
+
+「我知道，就這樣吧。」他小聲的呢喃著，輕輕搓著手臂。「那些事情遠比你想得還要危險，也不要去過度深入。」
+
+「這世界上有些事情知道的越少，對人來說才是好的。」</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">31-Mar-22 12:44 AM</span>
+
+            <div class="chatlog__message " data-message-id="958768615438577694" id="message-958768615438577694" title="Message sent: 31-Mar-22 12:44 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「的確如此。」點頭同意他的說法，有時無知才是幸福這一說法即便聽上去像是在逃避現實，能夠流傳至今也證實他有一定的力量。
+追尋真相並非是自己的職責，怪盜團所揭露的一切僅僅只是被大人們所掩蓋的惡行罷了。
+但是這個人的說法總像是他知曉一切似的，還是打算一個人背負嗎？
+
+故意用花灑往他頭頂開水，滿意的看著整個人濕透的樣子，搶在那人生氣之前先一步把人抱進浴缸裡，自己隨手順來旁邊的椅子坐在一旁，趴在浴缸邊緣瞇起了眼，「出去之後，我們去哪裡走走吧。」
+還有想和你說的話、想一起去的地方。
+
+我們做不到早點相遇，可現在還不遲。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">31-Mar-22 12:44 AM</span>
+
+            <div class="chatlog__message " data-message-id="958768804874309663" id="message-958768804874309663" title="Message sent: 31-Mar-22 12:44 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">在水往頭頂沖下時下意識的閉上眼，本來蓬鬆柔順的髮濕漉漉的貼服在後頸和耳側，有些狼狽的站在原地。
+
+「你……」正要發火時又被搶先挪動所在的位置，瞪著散發熱氣的水面、又看著一旁趴在浴缸邊的笨蛋，乾脆就這麼浸泡在熱水之中，畢竟想氣也氣不起來了。
+
+「……再說吧。」單手抹去了臉上多餘的水珠、並把髮絲撥弄到一旁，沒有正面的回應這句的邀約，也沒有確切的拒絕。
+
+報復性的，也撈起一把水往他的臉上潑去。
+……好幼稚啊，這樣的行為。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">31-Mar-22 12:48 AM</span>
+
+            <div class="chatlog__message " data-message-id="958769717504524349" id="message-958769717504524349" title="Message sent: 31-Mar-22 12:48 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">注意到他想做什麼也沒有躲開的意思，乾脆的讓他潑一臉水，水滴沿著被打濕的頭髮回到浴缸中，因為枕著手的動作而閉起一隻眼，自下方仰視他的視角倒是少見，看著他的樣子好一會兒後才伸手撫上他的臉，「約好了。」
+
+起身按著理所當然的想法去替人清理體內，看著清水逐漸混濁還是別開了視線，重新再替人沖了一次身體並且先暫時抱上床用棉被把整個人包起來。
+滿意的看著自己的成品點點頭，隨後才轉身也進浴室簡單沖了個澡。
+
+兩個人的衣服因為不同的原因暫時沒辦法穿了，想著明智那邊的狀況估計更糟，他的衣服也在過程中不知道被丟去哪裡了，想了會兒還是決定脫下自己僅僅只是被打濕的襯衫，從浴室裡找出吹風機就回到原本的房間坐在床邊吹乾。
+總感覺，好像了解了川上老師的心情。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">31-Mar-22 12:49 AM</span>
+
+            <div class="chatlog__message " data-message-id="958769937101504512" id="message-958769937101504512" title="Message sent: 31-Mar-22 12:49 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">沒有應聲，也未躲開碰上臉的手，溫暖的手心自重逢以來時常接觸到，莫名來的感到一絲微妙的悸動。
+
+明白射入體內的白濁必須清理出來，但第一次讓人實做倒是第一次的新鮮，輕聲的悶哼了幾聲，也放鬆著身子讓他動作，即使是能夠自己來的。
+也許只是看對方撇過頭不想直視的樣子還算覺得有趣吧。
+
+在離開浴室前順手的拿了一條乾燥的毛巾，被棉被包成一團時頗為無奈，還是伸出手把自己溼答答的頭髮給擦乾，並在過了段時間後穿上了屬於他的衣服。
+
+老實說……不壞。
+這種感覺也不會老實的告知讓對方知曉。
+
+晚餐什麼的隨它去吧，身體倦的想要立即躺下再補眠一會，也不在意是否躺在同一張床上，喬好了枕頭和棉被後就躺下了。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">31-Mar-22 12:51 AM</span>
+
+            <div class="chatlog__message " data-message-id="958770446428434432" id="message-958770446428434432" title="Message sent: 31-Mar-22 12:51 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">收拾好整個房間也順手把找回來的襯衫洗過並且掛起來，本想著休息前還是得吃點什麼，走近床邊才發現那人已經躺下。無奈的嘆了口氣，暫且打消了把人叫醒的念頭，也坐到床邊把眼鏡擺到桌上，沒打算和人爭一張棉被，只是再次從後面環住他的腰。
+能聞到熟悉和陌生的味道混在一起，懷裡人的觸感減緩了那股陌生，又收緊了力道。
+
+知道這種狀況不可能也不足以支撐未來的一切，這個人必定會在什麼時候離開——或是離開自己的視線、或是離開這個世界，這個擁抱無法束縛住他，可自己不想放手。
+太多、太多的感情扭曲至此，尊敬、憎恨、愛意——僅僅只是想要這個人活著。
+
+「……謝謝。」蹭著他的後頸，低聲在黑暗的空間中道出最後的真意。
+睡吧，<strong>未來的路還有很長。</strong></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">31-Mar-22 12:54 AM</span>
+
+            <div class="chatlog__message " data-message-id="958771308664074240" id="message-958771308664074240" title="Message sent: 31-Mar-22 12:54 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">緊閉的雙眸和平穩的呼吸讓人分不出他是否已經入眠。
+
+聽見了你的道謝了嗎？
+知道了你的執著了嗎？
+明智吾郎是否已經接受雨宮蓮了？
+
+安靜且黑暗的空間裡，兩人的身軀相依著，淡淡的百合花香竄入你的鼻間，懷裡的身軀證明著他仍在此。
+
+伴著仍然疲倦的精神和身體，你漸漸的墜入沉睡。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/aae5dc9040881d47cc8d2f4a11366538.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="明智 吾郎#0000" data-user-id="958402681695780974" style="">明智 吾郎</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">31-Mar-22 12:55 AM</span>
+
+            <div class="chatlog__message " data-message-id="958771371750600804" id="message-958771371750600804" title="Message sent: 31-Mar-22 12:55 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「－－蓮。」
+
+帶著些許冰涼的手輕輕碰上了臉龐，有誰在低聲說著話。
+
+<span class="spoiler-text spoiler-text--hidden" onclick="showSpoiler(event, this)">「忘了我吧。」</span>
+
+熟悉的花香逐漸離開了。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">31-Mar-22 12:55 AM</span>
+
+            <div class="chatlog__message " data-message-id="958771407830007838" id="message-958771407830007838" title="Message sent: 31-Mar-22 12:55 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">白日的陽光自窗戶照射進來，鳥鳴聲和喧鬧的人聲將你喚醒。
+
+即使收攏了手臂，懷裡也僅剩下了沒有溫度的棉被，而房間也是你所熟悉的。
+
+那是一場夢嗎？
+
+然、在起身之時，你看見了被好好摺疊著並放置在床角的襯衫。
+
+嗅慣的味道似乎還殘留著。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/958402681695780974/bfb1db9edd70771c0d507bb8d0e3e597.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="雨宮蓮#0000" data-user-id="958402681695780974" style="">雨宮蓮</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">31-Mar-22 12:56 AM</span>
+
+            <div class="chatlog__message " data-message-id="958771648419495996" id="message-958771648419495996" title="Message sent: 31-Mar-22 12:56 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">再次睜眼時，映入眼簾的是熟悉的天花板。黑貓正壓著自己捲縮成一團，窗外天氣正好，也能聽見來自樓下的吵雜人聲──並不記得和怪盜團的誰有約，但盧布朗已經是約定成俗的秘密基地，就算誰也沒有說好，有時總是能在咖啡廳見到友人的身影。
+只是在這之中唯有一人，並非朋友、也看不見他坐在吧檯前或是啜飲咖啡，或是閱讀文庫書。
+
+記憶中的一切不像夢境，可那人不在也是事實；視線隨著側頭的動作捕捉到被他人摺疊擺放的襯衫，起身伸手去拿在手中，淡淡的、無法忘卻的味道在空氣中瀰漫著。
+隨意地套上衣服並把黑貓抱起放到床上，沒有打算打擾他的睡眠，而是戴上眼鏡就往樓下趕去。
+
+「雙葉，」一眼找到座位上的少女，迴避掉對方投來的疑惑目光，選擇單刀直入的進入正題：「能拜託你幫一個忙嗎？」
+
+忘了你什麼的，怎麼可能做得到。
+身為怪盜必然會將看中的寶物奪取到手，毫無例外。
+
+身處泥濘之中的百合，依然值得誰去愛著。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/795894669841530890/9e20de89734b5fbce6c6bfcf13734bad.png?size=128" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="秋兔#9201" data-user-id="795894669841530890" style="color: rgb(111,169,222)">Eldred</span>
+
+
+        <span class="chatlog__timestamp">31-Mar-22 12:56 AM</span>
+
+            <div class="chatlog__message " data-message-id="958771833820295208" id="message-958771833820295208" title="Message sent: 31-Mar-22 12:56 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">選擇悄悄離去的那人或許不知你接下來的行動，又或是早已看穿，只有他才知曉。
+
+兩人再次相見的那一日遙遙無期，或是會在哪一日於街道上擦肩而過。
+
+你將在人海中尋覓著那抹孤寂的身影。
+
+正常的、普通的生活將回到你的身邊……但你明白的，在發生了許多事情以後，一切都在悄悄改變，以至於擁有現在的你。
+
+啃著愛、咬住愛。
+
+這樣微弱的夢想，從現在開始才正要甦醒。</span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="958771917005930496" id="message-958771917005930496" title="Message sent: 31-Mar-22 12:57 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><div class="quote-border"></div><div class="quote-content">■END 1。</div></div></span>
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+
+
+</div>
+
+<div class="postamble">
+    <div class="postamble__entry">Exported 112 message(s)</div>
+</div>
+
+</body>
+
+</html>
